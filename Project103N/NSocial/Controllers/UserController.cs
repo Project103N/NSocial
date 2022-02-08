@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using NSocial.DataAccess;
 using NSocial.Models;
+using System.IO;
 
 namespace NSocial.Controllers
 {
@@ -23,19 +24,41 @@ namespace NSocial.Controllers
         }
 
         // GET: User/Create
-        public ActionResult Add()
+        public ActionResult Register()
         {
             return View();
         }
 
         // POST: User/Create
+        // TODO: We will add short register form later.
         [HttpPost]
-        public ActionResult Add(User user)
+        public ActionResult Register(User user)
         {
             try
             {
+                user.RegisterDate = DateTime.Now; // auto registerdate
+                
+
+                if (user.RoleID == 0)
+                    user.RoleID = 1; // default role: user
+                user.ProfileImagePath = "default.png";
 
                 int insertedID = UserDAL.Methods.Insert(user);
+
+                if(insertedID != -1)
+                {
+                    user.ID = insertedID;
+
+                    if (user.ProfileImage != null)
+                    {
+                        string path = PhotoUpload(user.ID, user.ProfileImage);
+                        if (path != "")
+                        {
+                            return Content(path);
+                            // TODO: Update with image path
+                        }
+                    }
+                }
                 string html = "<p>" + insertedID + "</p>";
                 return Content(html);
             }
@@ -44,6 +67,27 @@ namespace NSocial.Controllers
                 throw(e);
                 //return Content("Olmadı yar!\");
             }
+        }
+        public string PhotoUpload(int userID,HttpPostedFileBase userPhoto)
+        {
+            string userPath = Server.MapPath($"~/UploadedFiles/User/");
+            string shortPath = $"{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/{userID}/";
+            string directory = userPath + shortPath;
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+            shortPath += userPhoto.FileName;
+
+            string photoPath = userPath + shortPath;
+            try
+            {
+                userPhoto.SaveAs(photoPath);
+            }
+            catch (Exception)
+            {
+                shortPath = "";
+                throw;
+            }
+            return shortPath;
         }
 
         // GET: User/Edit/5

@@ -1,0 +1,97 @@
+User (Table=User)
+----
+        *public int ID { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string Nickname { get; set; }
+        *public string Password { get; set; }
+        public HttpPostedFileBase ProfileImage { get; set; }
+        *public string ProfileImagePath { get; set; }
+        *public int RoleID { get; set; }
+        *public Role Role { get; set; }
+	*public Datetime RegisterDate { get; set; }
+
+	public ICollection<User> Followers { get; set; }
+	public ICollection<User> Followings { get; set; }
+
+	public int FollowersCount { get; set; }
+	public int FollowingsCount { get; set; }
+
+UserView (Oturum açmamışsa,takip etmiyorsa)
+--------
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Nickname { get; set; }
+        public string ProfileImagePath { get; set; }
+	public int FollowersCount { get; set; }
+	public int FollowingsCount { get; set; }
+
+Role: Table = Role
+----
+	ID 
+	Name
+
+
+Follow
+------
+	public int ID { get; set; }
+	public int FollowerID { get; set; }
+	public int FollowedID { get; set; }
+	public bool IsAccepted { get; set; } // default:false
+Post
+----
+	public int ID { get; set; }
+	public HttpFileBase { get; set; }
+	public string Text { get; set; }
+	public Datetime PostDate { get; set; }
+	public int LikesCount { get; set; }
+	public int PunchsCount { get; set; }
+	public int CommentsCount { get; set; }
+	public int UserID { get; set; }
+	public User UserID { get; set; }
+	public ICollection<Post> Comments { get; set; }
+
+
+Reaction
+--------
+	public int ID { get; set; }
+	public int PostID { get; set; }	
+	public int UserID { get; set; }
+	public int ReactionType { get; set; }
+	
+
+#User Bloklama: Dislike'a göre
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-		$exception	
+{"The parameterized query '(@name nvarchar(5),@surname nvarchar(4),
+@nickname nvarchar(5),@p' expects the parameter '@profileimagepath', 
+which was not supplied."}	System.Data.SqlClient.SqlException
