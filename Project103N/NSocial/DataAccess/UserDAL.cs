@@ -32,7 +32,7 @@ namespace NSocial.DataAccess
         {
 
             //user.AddressID = Convert.ToInt32(AddressDAL.Methods.Insert(user.Address));
-            string query = $@"INSERT INTO [dbo].[User] ([Name],[Surname],[Nickname],[ProfileImagePath],[FollowersCount],[FollowingsCount],[Email],[Password],[RoleID]) VALUES (@name, @surname, @nickname, @profileimagepath, @followerscount,@followingscount,@email,@password,@roleid); SELECT CAST(scope_identity() AS int);";
+            string query = $@"INSERT INTO [dbo].[User] ([Name],[Surname],[Nickname],[ProfileImagePath],[FollowersCount],[FollowingsCount],[Email],[Password],[RoleID],[RegisterDate]) VALUES (@name, @surname, @nickname, @profileimagepath, @followerscount,@followingscount,@email,@password,@roleid,@registerdate); SELECT CAST(scope_identity() AS int);";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@name", user.Name);
             cmd.Parameters.AddWithValue("@surname", user.Surname);
@@ -42,7 +42,8 @@ namespace NSocial.DataAccess
             cmd.Parameters.AddWithValue("@followingscount", user.FollowingsCount);
             cmd.Parameters.AddWithValue("@email", user.Email);
             cmd.Parameters.AddWithValue("@password", user.Password);
-            cmd.Parameters.AddWithValue("@roleid", 1);
+            cmd.Parameters.AddWithValue("@roleid", user.RoleID);
+            cmd.Parameters.AddWithValue("@registerdate", user.RegisterDate);
             return DbTools.Connection.Create(cmd);
         }
         //public User Read(int userid)
