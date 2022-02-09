@@ -8,6 +8,7 @@ namespace NSocial.Models
 {
     public class User:UserBase
     {
+
         public int ID { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
@@ -19,5 +20,7 @@ namespace NSocial.Models
 
         public ICollection<User> Followers { get; set; }
         public ICollection<User> Followings { get; set; }
+        public bool isActive;
+
     }
 }

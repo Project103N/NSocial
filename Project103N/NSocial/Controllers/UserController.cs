@@ -6,15 +6,21 @@ using System.Web.Mvc;
 using NSocial.DataAccess;
 using NSocial.Models;
 using System.IO;
+using System.Data.SqlClient;
+using System.Configuration;
 
 namespace NSocial.Controllers
 {
     public class UserController : Controller
     {
+        static string strConnection = ConfigurationManager.ConnectionStrings["NSocialCS"].ConnectionString;
+        public SqlConnection con = new SqlConnection(strConnection);
         // GET: User
         public ActionResult Index()
         {
-            return View();
+            List<User> users = new List<User>();
+            users = UserDAL.Methods.All();
+            return View(users);
         }
 
         // GET: User/Details/5
@@ -31,31 +37,27 @@ namespace NSocial.Controllers
 
         // POST: User/Create
         // TODO: We will add short register form later.
-        [HttpPost]
+        [HttpPost] // From Form
         public ActionResult Register(User user)
         {
             try
             {
                 user.RegisterDate = DateTime.Now; // auto registerdate
-                
-
                 if (user.RoleID == 0)
                     user.RoleID = 1; // default role: user
                 user.ProfileImagePath = "default.png";
-
-                int insertedID = UserDAL.Methods.Insert(user);
-
-                if(insertedID != -1)
+                int insertedID = UserDAL.Methods.Add(user);
+                if (insertedID != -1)
                 {
                     user.ID = insertedID;
-
                     if (user.ProfileImage != null)
                     {
                         string path = PhotoUpload(user.ID, user.ProfileImage);
                         if (path != "")
                         {
+                            user.ProfileImagePath = path;
+                            UserDAL.Methods.SaveChanges(user);
                             return Content(path);
-                            // TODO: Update with image path
                         }
                     }
                 }
@@ -85,7 +87,6 @@ namespace NSocial.Controllers
             catch (Exception)
             {
                 shortPath = "";
-                throw;
             }
             return shortPath;
         }
@@ -98,11 +99,11 @@ namespace NSocial.Controllers
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, User user)
         {
             try
             {
-                // TODO: Add update logic here
+                /*serDAL.Methods.Update(user);*/
 
                 return RedirectToAction("Index");
             }
@@ -120,12 +121,12 @@ namespace NSocial.Controllers
 
         // POST: User/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(User user)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                user.isActive = false;
+                UserDAL.Methods.SaveChanges(user);
                 return RedirectToAction("Index");
             }
             catch

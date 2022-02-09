@@ -70,9 +70,8 @@ namespace NSocial.DataAccess
             }
             return Convert.ToInt32(insertedID);
         }
-        public bool Execute(string query)
+        public bool Execute(SqlCommand cmd)
         {
-            SqlCommand cmd = new SqlCommand(query, con);
             int affectedRows = -1;
             try
             {

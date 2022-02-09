@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -28,11 +29,11 @@ namespace NSocial.DataAccess
         //    return ListUser(query)[0];
         //}
 
-        public int Insert(User user)
+        public int Add(User user)
         {
 
             //user.AddressID = Convert.ToInt32(AddressDAL.Methods.Insert(user.Address));
-            string query = $@"INSERT INTO [dbo].[User] ([Name],[Surname],[Nickname],[ProfileImagePath],[FollowersCount],[FollowingsCount],[Email],[Password],[RoleID],[RegisterDate]) VALUES (@name, @surname, @nickname, @profileimagepath, @followerscount,@followingscount,@email,@password,@roleid,@registerdate); SELECT CAST(scope_identity() AS int);";
+            string query = $@"INSERT INTO [dbo].[User] ([Name],[Surname],[Nickname],[ProfileImagePath],[FollowersCount],[FollowingsCount],[Email],[Password],[RoleID],[RegisterDate],[IsActive]) VALUES (@name, @surname, @nickname, @profileimagepath, @followerscount,@followingscount,@email,@password,@roleid,@registerdate,@isactive); SELECT CAST(scope_identity() AS int);";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@name", user.Name);
             cmd.Parameters.AddWithValue("@surname", user.Surname);
@@ -44,59 +45,79 @@ namespace NSocial.DataAccess
             cmd.Parameters.AddWithValue("@password", user.Password);
             cmd.Parameters.AddWithValue("@roleid", user.RoleID);
             cmd.Parameters.AddWithValue("@registerdate", user.RegisterDate);
+            cmd.Parameters.AddWithValue("@isactive", user.isActive);
             return DbTools.Connection.Create(cmd);
         }
-        //public User Read(int userid)
-        //{
-        //    string query = $"SELECT * FROM [User] WHERE ID = {userid}";
-        //    User usr = ListUser(query)[0];
-        //    return usr;
-        //}
-        //public bool Update(User user)
-        //{
-        //    string query = $@"UPDATE [dbo].[User] SET [FullName] = '{user.FullName}',[Email] = '{user.Email}', [Password] = '{user.Password}', [PhoneNumber] = '{user.PhoneNumber}',[ProfilePicUrl] = '{user.ProfilePicUrl}',[AddressID] = {user.AddressID},[RoleID] = 1 WHERE ID={user.ID};";
-        //    return DbTools.Connection.Execute(query);
-        //}
 
-        //public bool Delete(User user)
-        //{
-        //    string query = $@"DELETE FROM [User] WHERE ID={user.ID};";
-        //    return DbTools.Connection.Execute(query);
-        //}
+        public bool SaveChanges(User user)
+        {
+            string query = $@"UPDATE [dbo].[User] SET [Name]=@name,[Surname]=@surname,[Nickname]=@nickname,[ProfileImagePath]=@profileimagepath, [FollowersCount]=@followerscount,[FollowingsCount]=@followingscount, [Email]=@email,[Password]=@password,[RoleID]=@roleid,[IsActive]=@isactive WHERE [ID]=@id;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@name", user.Name);
+            cmd.Parameters.AddWithValue("@surname", user.Surname);
+            cmd.Parameters.AddWithValue("@nickname", user.Nickname);
+            cmd.Parameters.AddWithValue("@profileimagepath", user.ProfileImagePath);
+            cmd.Parameters.AddWithValue("@followerscount", user.FollowersCount);
+            cmd.Parameters.AddWithValue("@followingscount", user.FollowingsCount);
+            cmd.Parameters.AddWithValue("@email", user.Email);
+            cmd.Parameters.AddWithValue("@password", user.Password);
+            cmd.Parameters.AddWithValue("@roleid", user.RoleID);
+            cmd.Parameters.AddWithValue("@id", user.ID);
+            cmd.Parameters.AddWithValue("@isactive", user.isActive);
+            return DbTools.Connection.Execute(cmd);
+        }
 
-        //public List<User> List()
-        //{
-        //    string query = "SELECT * FROM [User];";
-        //    return ListUser(query);
-        //}
+        public List<User> All()
+        {
+            List<User> activeUserList = new List<User>();
+            User user = new User();
+            string query = $"SELECT * FROM [User] WHERE IsActive=1;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            IDataReader reader;
+            DbTools.Connection.ConnectDB();
+            try
+            {
+                reader = cmd.ExecuteReader();
+                while (reader.Read()) // Okunacak satır varsa çalışsın.
+                {
 
-        //public List<User> ListUser(string query)
-        //{
-        //    List<User> users = new List<User>();
-        //    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-        //    IDataReader reader;
+                    //user.ID = int.Parse(reader["ID"].ToString());
+                    user.ID = reader.GetInt32(0);
+                    user.Name = reader["Name"].ToString();
+                    user.Surname = reader["Surname"].ToString();
+                    user.ProfileImagePath = reader["ProfileImagePath"].ToString();
+                    user.FollowersCount = int.Parse(reader["FollowersCount"].ToString());
+                    user.FollowingsCount = int.Parse(reader["FollowingsCount"].ToString()); ;
+                    user.Email = reader["Email"].ToString();
+                    user.Password = reader["Password"].ToString();
+                    user.RoleID = int.Parse(reader["RoleID"].ToString());
+                    user.RegisterDate = DateTime.ParseExact(reader["RegisterDate"].ToString(), "yyyy-MM-dd HH:mm:ss", null);
+                    user.isActive = Convert.ToBoolean(reader["IsActive"].ToString());
 
-        //    DbTools.Connection.ConnectDB();
-        //    reader = cmd.ExecuteReader();
-        //    while (reader.Read())
-        //    {
-        //        users.Add(new User()
-        //        {
-        //            ID = int.Parse(reader["ID"].ToString()),
-        //            FullName = reader["FullName"].ToString(),
-        //            AddressID = int.Parse(reader["AddressID"].ToString()),
-        //            Email = reader["Email"].ToString(),
-        //            Password = reader["Password"].ToString(),
-        //            RoleID = int.Parse(reader["RoleID"].ToString()),
-        //            PhoneNumber = reader["PhoneNumber"].ToString(),
-        //            ProfilePicUrl = reader["ProfilePicUrl"].ToString()
-        //        });
-        //    }
+                    activeUserList.Add(user);
+                    DbTools.Connection.DisconnectDB();
 
-        //    DbTools.Connection.DisconnectDB();
+                }
+            }
+            catch (Exception)
+            {
+                DbTools.Connection.DisconnectDB();
 
-        //    return users;
-        //}
+                throw;
+            }
+
+            return activeUserList;
+        }
+
+
+
+
+
+
+
+
+
+        
 
         //public User GetByEmail(string email)
         //{
