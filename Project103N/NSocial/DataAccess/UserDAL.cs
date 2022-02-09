@@ -22,12 +22,7 @@ namespace NSocial.DataAccess
             }
         }
 
-        //public User GetByID(int id)
-        //{
-        //    string query = $"SELECT * FROM [User] WHERE ID={id};";
 
-        //    return ListUser(query)[0];
-        //}
 
         public int Add(User user)
         {
@@ -69,44 +64,57 @@ namespace NSocial.DataAccess
 
         public List<User> All()
         {
-            List<User> activeUserList = new List<User>();
-            User user = new User();
             string query = $"SELECT * FROM [User] WHERE IsActive=1;";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            return GetUsers(cmd);
+        }
+
+        public List<User> GetUsers(SqlCommand cmd)
+        {
+            List<User> activeUserList = new List<User>();
             IDataReader reader;
             DbTools.Connection.ConnectDB();
             try
             {
                 reader = cmd.ExecuteReader();
+                
                 while (reader.Read()) // Okunacak satır varsa çalışsın.
                 {
-
+                    User user = new User();
                     //user.ID = int.Parse(reader["ID"].ToString());
                     user.ID = reader.GetInt32(0);
                     user.Name = reader["Name"].ToString();
                     user.Surname = reader["Surname"].ToString();
+                    user.Nickname = reader["Nickname"].ToString();
                     user.ProfileImagePath = reader["ProfileImagePath"].ToString();
                     user.FollowersCount = int.Parse(reader["FollowersCount"].ToString());
                     user.FollowingsCount = int.Parse(reader["FollowingsCount"].ToString()); ;
                     user.Email = reader["Email"].ToString();
                     user.Password = reader["Password"].ToString();
                     user.RoleID = int.Parse(reader["RoleID"].ToString());
-                    user.RegisterDate = DateTime.ParseExact(reader["RegisterDate"].ToString(), "yyyy-MM-dd HH:mm:ss", null);
+                    user.RegisterDate = (DateTime)(reader["RegisterDate"]);
                     user.isActive = Convert.ToBoolean(reader["IsActive"].ToString());
 
                     activeUserList.Add(user);
-                    DbTools.Connection.DisconnectDB();
-
                 }
+                reader.Close();
+                DbTools.Connection.DisconnectDB();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 DbTools.Connection.DisconnectDB();
 
-                throw;
+                throw(e);
             }
 
             return activeUserList;
+        }
+
+        public User Find(int id)
+        {
+            string query = $"SELECT * FROM [User] WHERE ID={id} AND IsActive=1;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            return GetUsers(cmd)[0];
         }
 
 
@@ -117,7 +125,9 @@ namespace NSocial.DataAccess
 
 
 
-        
+
+
+
 
         //public User GetByEmail(string email)
         //{

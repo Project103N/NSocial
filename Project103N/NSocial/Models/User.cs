@@ -17,7 +17,6 @@ namespace NSocial.Models
         public int RoleID { get; set; }
         public Role Role { get; set; }
         public DateTime RegisterDate { get; set; }
-
         public ICollection<User> Followers { get; set; }
         public ICollection<User> Followings { get; set; }
         public bool isActive;

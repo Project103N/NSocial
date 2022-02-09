@@ -18,9 +18,8 @@ namespace NSocial.Controllers
         // GET: User
         public ActionResult Index()
         {
-            List<User> users = new List<User>();
-            users = UserDAL.Methods.All();
-            return View(users);
+            // UserDAL.Methods.All() 'dan dönen List<User> ı döndürür.
+            return View(UserDAL.Methods.All());
         }
 
         // GET: User/Details/5
@@ -46,6 +45,7 @@ namespace NSocial.Controllers
                 if (user.RoleID == 0)
                     user.RoleID = 1; // default role: user
                 user.ProfileImagePath = "default.png";
+                user.isActive = true;
                 int insertedID = UserDAL.Methods.Add(user);
                 if (insertedID != -1)
                 {
@@ -94,17 +94,32 @@ namespace NSocial.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return View(UserDAL.Methods.Find(id));
         }
 
         // POST: User/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, User user)
+        public ActionResult Edit(User user)
         {
+            if (user.ProfileImage != null)
+            {
+                string path = PhotoUpload(user.ID, user.ProfileImage);
+                if (path != "")
+                {
+                    string oldPhotoPath = Server.MapPath($"~/UploadedFiles/User/")+ user.ProfileImagePath;
+                    FileInfo f = new FileInfo(oldPhotoPath);
+                    if(f.Exists)
+                        f.Delete();
+                    user.ProfileImagePath = path;
+
+                    //eskiyi sil
+                }
+            }
+
+            user.isActive = true;
             try
             {
-                /*serDAL.Methods.Update(user);*/
-
+                UserDAL.Methods.SaveChanges(user);
                 return RedirectToAction("Index");
             }
             catch
@@ -113,10 +128,11 @@ namespace NSocial.Controllers
             }
         }
 
+
         // GET: User/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(UserDAL.Methods.Find(id));
         }
 
         // POST: User/Delete/5
@@ -125,6 +141,7 @@ namespace NSocial.Controllers
         {
             try
             {
+                user = UserDAL.Methods.Find(user.ID);
                 user.isActive = false;
                 UserDAL.Methods.SaveChanges(user);
                 return RedirectToAction("Index");
