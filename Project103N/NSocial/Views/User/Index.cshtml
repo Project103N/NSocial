@@ -10,6 +10,10 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+
+@if(Model != null)
+{ 
 <table class="table">
     <tr>
         <th>
@@ -57,16 +61,7 @@
             @Html.DisplayFor(modelItem => item.Nickname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProfileImagePath)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RegisterDate)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
@@ -77,3 +72,5 @@
 }
 
 </table>
+}
+

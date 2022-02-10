@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using NSocial.DataAccess;
 using NSocial.ModelBase;
 
 namespace NSocial.Models
@@ -15,7 +16,12 @@ namespace NSocial.Models
         public string Password2 { get; set; }
         public HttpPostedFileBase ProfileImage { get; set; }
         public int RoleID { get; set; }
-        public Role Role { get; set; }
+
+        private Role _Role { get; set; }
+        public Role Role {
+            get { return RoleDAL.Methods.GetByID(RoleID); }
+            set { this._Role = value; } 
+        }
         public DateTime RegisterDate { get; set; }
         public ICollection<User> Followers { get; set; }
         public ICollection<User> Followings { get; set; }

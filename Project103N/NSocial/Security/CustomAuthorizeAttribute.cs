@@ -15,18 +15,19 @@ namespace NSocial.Security
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
             if (string.IsNullOrEmpty(SessionPersister.Email))
+            {
                 filterContext.Result = new RedirectToRouteResult(new
                     RouteValueDictionary(new
-                    {
-                        controller = "LoginUser",
+                    { // Eğer HttpContext.Current.Session["email"] boş yada null ise Login sayfasına yönlendir.
+                        controller = "User",
                         action = "Login"
                     }));
+            } 
             else
             {
                 // USER LOGGED IN BUT NOT AUTHORISED
                 User user = new User();
-                //user = UserDAL.Methods.GetByEmail(SessionPersister.Email);
-                user = new User();
+                user = UserDAL.Methods.FindX(SessionPersister.Email);
                 CustomPrincipal mp = new CustomPrincipal(user);
                 if (!mp.IsInRole(Roles))
                     filterContext.Result = new RedirectToRouteResult(new

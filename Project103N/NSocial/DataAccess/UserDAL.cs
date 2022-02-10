@@ -117,14 +117,27 @@ namespace NSocial.DataAccess
             return GetUsers(cmd)[0];
         }
 
-
-
-
-
-
-
-
-
+        public User FindX(object obj)
+        {
+            SqlCommand cmd;
+            string strObj = obj.ToString();
+            string query = "";
+            if (obj is int id)
+            {
+                query = $"SELECT * FROM [User] WHERE ID={id} AND IsActive=1;";
+                cmd = new SqlCommand(query, DbTools.Connection.con);
+                return GetUsers(cmd)[0];
+            }
+            else if (obj is string)
+            {
+                query = $"SELECT * FROM [User] WHERE (Nickname= @nickname or Email= @email) AND IsActive=1;";
+                cmd = new SqlCommand(query, DbTools.Connection.con);
+                cmd.Parameters.AddWithValue("@nickname", strObj);
+                cmd.Parameters.AddWithValue("@email", strObj);
+                return GetUsers(cmd)[0];
+            }
+            return null;
+        }
 
 
 

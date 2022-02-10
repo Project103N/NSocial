@@ -16,8 +16,10 @@ namespace NSocial.Security
                 get
                 {
                     if (HttpContext.Current == null)
-                        return string.Empty;
-                    var sessionVar = HttpContext.Current.Session[emailSessionVar];
+                    { 
+                        return string.Empty; // return "";
+                    }
+                var sessionVar = HttpContext.Current.Session[emailSessionVar];
                     if (sessionVar != null)
                         return sessionVar as string;
                     return null;

@@ -8,6 +8,8 @@ using NSocial.Models;
 using System.IO;
 using System.Data.SqlClient;
 using System.Configuration;
+using NSocial.Security;
+using NSocial.ViewModels;
 
 namespace NSocial.Controllers
 {
@@ -25,7 +27,7 @@ namespace NSocial.Controllers
         // GET: User/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(UserDAL.Methods.Find(id));
         }
 
         // GET: User/Create
@@ -92,8 +94,18 @@ namespace NSocial.Controllers
         }
 
         // GET: User/Edit/5
+
+        [CustomAuthorize(Roles ="user,superadmin")]
         public ActionResult Edit(int id)
         {
+            User currentUser = UserDAL.Methods.FindX(SessionPersister.Email);
+
+            User editUser = UserDAL.Methods.FindX(id);
+            if (currentUser.RoleID == 1)
+            { // rolü user ise sadece kendi hesabını düzenleyebilir.
+                if (SessionPersister.Email != editUser.Email) // kendisi mi?
+                    return RedirectToAction("AuthorizationFailed");
+            }
             return View(UserDAL.Methods.Find(id));
         }
 
@@ -150,6 +162,43 @@ namespace NSocial.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Login(LoginUser loginUser )
+        {
+
+            User user = UserDAL.Methods.FindX(loginUser.Email);
+            if (user != null)
+            {
+                if (user.Password == loginUser.Password)
+                {
+                    // Session oluştur!!!
+                    SessionPersister.Email = user.Email;
+                    return View("Index");
+                    // returnUrl eklenecek.
+                }
+            }
+
+            ViewBag.Error = "Login failed.";
+            return View("Login");
+
+        }
+
+        public ActionResult Logout()
+        {
+            SessionPersister.Email = string.Empty;
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult AuthorizationFailed()
+        {
+            return View();
         }
     }
 }
