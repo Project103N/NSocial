@@ -122,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\DbTools.cs" />
     <Compile Include="DataAccess\FollowDAL.cs" />
@@ -191,6 +192,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedFiles\User\" />
+    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
