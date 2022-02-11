@@ -201,5 +201,15 @@ namespace NSocial.Controllers
         {
             return View();
         }
+
+        public ActionResult Follow()
+        {
+            return View();
+        }
+        public ActionResult Unfollow()
+        {
+            return View();
+        }
+
     }
 }

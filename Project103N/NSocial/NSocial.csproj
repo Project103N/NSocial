@@ -123,6 +123,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\DbTools.cs" />
+    <Compile Include="DataAccess\FollowDAL.cs" />
     <Compile Include="DataAccess\RoleDAL.cs" />
     <Compile Include="DataAccess\UserDAL.cs" />
     <Compile Include="Global.asax.cs">

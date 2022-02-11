@@ -10,7 +10,7 @@ namespace NSocial.Security
     public static class SessionPersister
     {
         static string emailSessionVar = "email";
-        static int IDSessionVar = -1;
+        static string IDSessionVar = "ID";
 
         public static int ID
         {
