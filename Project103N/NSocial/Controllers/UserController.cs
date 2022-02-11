@@ -180,6 +180,7 @@ namespace NSocial.Controllers
                 {
                     // Session oluştur!!!
                     SessionPersister.Email = user.Email;
+                    SessionPersister.ID = user.ID;
                     return View("Index");
                     // returnUrl eklenecek.
                 }
