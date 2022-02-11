@@ -40,7 +40,7 @@
                     {
                         @*<li><a class="btn btn-warning" href="/User/Details/@user.ID">@user.Email</a></li>*@
                         @Html.ActionLink(@user.Email, "Details", "User", new { id=user.ID }, new { @class = "btn btn-warning" })
-                        <li>@Html.ActionLink("Logout", "Logout", "User", null, new { @class = "btn btn-danger" })</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-danger" })</li>
                     }
                 </ul>
 

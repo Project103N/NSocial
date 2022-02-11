@@ -13,6 +13,7 @@ using NSocial.ViewModels;
 
 namespace NSocial.Controllers
 {
+    [CustomAuthorize(Roles = "superadmin")]
     public class UserController : Controller
     {
         static string strConnection = ConfigurationManager.ConnectionStrings["NSocialCS"].ConnectionString;
@@ -66,13 +67,13 @@ namespace NSocial.Controllers
                 string html = "<p>" + insertedID + "</p>";
                 return Content(html);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                throw(e);
+                throw (e);
                 //return Content("Olmadı yar!\");
             }
         }
-        public string PhotoUpload(int userID,HttpPostedFileBase userPhoto)
+        public string PhotoUpload(int userID, HttpPostedFileBase userPhoto)
         {
             string userPath = Server.MapPath($"~/UploadedFiles/User/");
             string shortPath = $"{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/{userID}/";
@@ -95,7 +96,7 @@ namespace NSocial.Controllers
 
         // GET: User/Edit/5
 
-        [CustomAuthorize(Roles ="user,superadmin")]
+        [CustomAuthorize(Roles = "user,superadmin")]
         public ActionResult Edit(int id)
         {
             User currentUser = UserDAL.Methods.FindX(SessionPersister.Email);
@@ -118,9 +119,9 @@ namespace NSocial.Controllers
                 string path = PhotoUpload(user.ID, user.ProfileImage);
                 if (path != "")
                 {
-                    string oldPhotoPath = Server.MapPath($"~/UploadedFiles/User/")+ user.ProfileImagePath;
+                    string oldPhotoPath = Server.MapPath($"~/UploadedFiles/User/") + user.ProfileImagePath;
                     FileInfo f = new FileInfo(oldPhotoPath);
-                    if(f.Exists)
+                    if (f.Exists)
                         f.Delete();
                     user.ProfileImagePath = path;
 
@@ -162,44 +163,6 @@ namespace NSocial.Controllers
             {
                 return View();
             }
-        }
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Login(LoginUser loginUser )
-        {
-
-            User user = UserDAL.Methods.FindX(loginUser.Email);
-            if (user != null)
-            {
-                if (user.Password == loginUser.Password)
-                {
-                    // Session oluştur!!!
-                    SessionPersister.Email = user.Email;
-                    SessionPersister.ID = user.ID;
-                    return View("Index");
-                    // returnUrl eklenecek.
-                }
-            }
-
-            ViewBag.Error = "Login failed.";
-            return View("Login");
-
-        }
-
-        public ActionResult Logout()
-        {
-            SessionPersister.Email = string.Empty;
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult AuthorizationFailed()
-        {
-            return View();
         }
     }
 }
