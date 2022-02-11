@@ -1,0 +1,131 @@
+Database Server:nsocial.database.windows.net
+Auth Type: 	SQL Server Auth.
+Username: 	networkadmin
+Passowrd: 	network-2022
+
+
+https://codepen.io/search/pens?q=like+button+animation
+
+
+
+Home(Controller,View): Gamze, Esra, Erdem
+(INNER JOIN -> VIEW: Sadece takip ettiklerimizin gönderilerini görelim.)
+(Template _Layout.cshtml)
+----
+
+
+
+Follow (Model,DAL,Controller,View,SQL): Hakan,Emre,Salih
+------
+	public int ID { get; set; }
+	public int FollowerID { get; set; }
+	public int FollowedID { get; set; }
+	false:public bool IsAccepted { get; set; } // default:false
+
+	public User Follower {get;set;}
+	public User Followed {get;set;}
+
+(Kullanıcı takip isteği attığında IsAceppted false başlangıçta olacak.
+Takip isteklerini listelemek için bir metot yazılacak.(Follow tablosunu oku.)
+Takip istekleri listesi kullanıcı ekranına döndürülmek üzere listelenecek.
+Filtreleme: Sadece aktif kullanıcıya gelen takip isteklerini getir.)
+Istek Onaylama metodunu yaz. Kullanıcı kabul et butonuna tıklayınca o istek kaydındaki
+IsAccepted true olarak Update edilecek.
+)
+
+
+Post(Model,DAL,Controller,View,SQL): Serdar,Yakup,Talha,Birol
+----
+	public int ID { get; set; }
+	public HttpFileBase { get; set; }
+	public string Text { get; set; }
+	public Datetime PostDate { get; set; }
+	public int LikesCount { get; set; }
+	public int PunchsCount { get; set; }
+	public int CommentsCount { get; set; }
+	public int UserID { get; set; }
+	public User UserID { get; set; }
+	public ICollection<Post> Comments { get; set; }
+
+
+Reaction(Like,Dislike)(Model,DAL,Controller,Partial_View,SQL): Sena,Cem,Furkan
+--------------------------------
+	public int ID { get; set; }
+	public int PostID { get; set; }	
+	public int UserID { get; set; }
+	public int ReactionType { get; set; }
+	
+
+#User Bloklama: Dislike'a göre
+
+DONE
+----
+----
+
+User (Table=User)
+----
+        *public int ID { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public string Nickname { get; set; }
+        *public string Password { get; set; }
+        public HttpPostedFileBase ProfileImage { get; set; }
+        *public string ProfileImagePath { get; set; }
+        *public int RoleID { get; set; }
+        *public Role Role { get; set; }
+	*public Datetime RegisterDate { get; set; }
+
+	public ICollection<User> Followers { get; set; }
+	public ICollection<User> Followings { get; set; }
+
+	public int FollowersCount { get; set; }
+	public int FollowingsCount { get; set; }
+
+UserView (Oturum açmamışsa,takip etmiyorsa)
+--------
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Nickname { get; set; }
+        public string ProfileImagePath { get; set; }
+	public int FollowersCount { get; set; }
+	public int FollowingsCount { get; set; }
+
+Role: Table = Role
+----
+	ID 
+	Name
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-		$exception	
+{"The parameterized query '(@name nvarchar(5),@surname nvarchar(4),
+@nickname nvarchar(5),@p' expects the parameter '@profileimagepath', 
+which was not supplied."}	System.Data.SqlClient.SqlException
