@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Like";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Like</h2>
+
+
+<style>
+    body {
+        margin: 40px;
+    }
+
+    button {
+        cursor: pointer;
+        outline: 0;
+        color: #AAA;
+    }
+
+    .btn:focus {
+        outline: none;
+    }
+
+    .green {
+        color: green;
+    }
+
+    .red {
+        color: red;
+    }
+</style>
+
+@section Scripts {
+    <script>
+        var btn1 = document.querySelector('#green');
+        var btn2 = document.querySelector('#red');
+
+        btn1.addEventListener('click', function () {
+
+            if (btn2.classList.contains('red')) {
+                btn2.classList.remove('red');
+            }
+            this.classList.toggle('green');
+
+        });
+
+        btn2.addEventListener('click', function () {
+
+            if (btn1.classList.contains('green')) {
+                btn1.classList.remove('green');
+            }
+            this.classList.toggle('red');
+
+        });
+
+
+    </script>
+}
+@Html.ActionLink("Like", "Like", new { id = item.ID }) |
+@Html.ActionLink("Dislike", "Dislike", new { id = item.ID }) |
+<script src="https://use.fontawesome.com/fe459689b4.js"></script>
+
+<button class="btn" id="green"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+<button class="btn" id="red"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
+
