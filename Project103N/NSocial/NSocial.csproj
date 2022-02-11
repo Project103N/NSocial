@@ -121,6 +121,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DataAccess\DbTools.cs" />
     <Compile Include="DataAccess\FollowDAL.cs" />
@@ -130,6 +131,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="ModelBase\UserBase.cs" />
+    <Compile Include="Models\Follow.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -180,8 +182,9 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Delete.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
-    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\User\AuthorizationFailed.cshtml" />
+    <Content Include="Views\Login\AuthorizationFailed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
