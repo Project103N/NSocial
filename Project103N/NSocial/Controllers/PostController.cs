@@ -82,7 +82,7 @@ namespace NSocial.Controllers
                     if (f.Exists)
                         f.Delete();
 
-                    Post.PostImagePath = (HttpPostedFileBase)path;
+                    //Post.PostImagePath = (HttpPostedFileBase)path;
 
                     //eskiyi sil
                 }
@@ -113,7 +113,7 @@ namespace NSocial.Controllers
             try
             {
                 Post = PostDAL.Methods.Find(Post.ID);
-                Post.isActive = false; ""
+               // Post.isActive = false;
                 PostDAL.Methods.SaveChanges(Post);
                 return RedirectToAction("Index");
             }
