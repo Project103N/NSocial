@@ -189,6 +189,7 @@
     <Content Include="Views\User\AuthorizationFailed.cshtml" />
     <Content Include="Views\Login\AuthorizationFailed.cshtml" />
     <Content Include="Views\Post\PostAdd.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
