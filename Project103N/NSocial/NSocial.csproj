@@ -132,7 +132,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="ModelBase\PostBase.cs" />
     <Compile Include="ModelBase\UserBase.cs" />
     <Compile Include="Models\Follow.cs" />
     <Compile Include="Models\Post.cs" />
@@ -189,11 +188,11 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\User\AuthorizationFailed.cshtml" />
     <Content Include="Views\Login\AuthorizationFailed.cshtml" />
+    <Content Include="Views\Post\PostAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UploadedFiles\User\" />
-    <Folder Include="Views\Post\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

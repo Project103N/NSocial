@@ -60,7 +60,7 @@ namespace NSocial.DataAccess
 
         public bool Delete(int id)
         {
-            string query = $"DELETE FROM Student WHERE ID=@id;";
+            string query = $"DELETE FROM Post WHERE ID=@id;";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@id", id);
             return true;
@@ -81,11 +81,11 @@ namespace NSocial.DataAccess
             {
                 reader = cmd.ExecuteReader();
 
-                while (reader.Read()) // Okunacak satır varsa çalışsın.
+                while (reader.Read()) 
                 {
                     Post post = new Post();
                     post.ID = reader.GetInt32(0);
-                    post.PostImagePath = (HttpPostedFileBase)reader["PostImagePath"];
+                    post.PostImagePath = reader["PostImagePath"].ToString();
                     post.Text = reader["Text"].ToString();
                     post.LikesCount = int.Parse(reader["LikesCount"].ToString());
                     post.PunchsCount = int.Parse(reader["PunchsCount"].ToString());
@@ -113,7 +113,7 @@ namespace NSocial.DataAccess
 
         public Post Find(int id)
         {
-            string query = $"SELECT * FROM [User] WHERE ID={id} AND IsActive=1;";
+            string query = $"SELECT * FROM [Post] WHERE ID={id};";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             return GetUsers(cmd)[0];
         }
@@ -125,18 +125,10 @@ namespace NSocial.DataAccess
             string query = "";
             if (obj is int id)
             {
-                query = $"SELECT * FROM [User] WHERE ID={id} AND IsActive=1;";
+                query = $"SELECT * FROM [Post] WHERE ID={id};";
                 cmd = new SqlCommand(query, DbTools.Connection.con);
                 return GetUsers(cmd)[0];
 
-            }
-            else if (obj is string)
-            {
-                query = $"SELECT * FROM [User] WHERE (Nickname= @nickname or Email= @email) AND IsActive=1;";
-                cmd = new SqlCommand(query, DbTools.Connection.con);
-                cmd.Parameters.AddWithValue("@nickname", strObj);
-                cmd.Parameters.AddWithValue("@email", strObj);
-                return GetUsers(cmd)[0];
             }
             return null;
         }

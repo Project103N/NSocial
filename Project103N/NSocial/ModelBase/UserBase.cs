@@ -7,6 +7,7 @@ namespace NSocial.ModelBase
 {
     public class UserBase
     {
+        public string PostImagePath { get; set; } = "path";  
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Nickname { get; set; }

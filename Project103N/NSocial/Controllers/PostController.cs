@@ -30,6 +30,40 @@ namespace NSocial.Controllers
         }
 
 
+        //PostADD
+        public ActionResult PostAdd(Post post)
+        {
+            try
+            {
+                //if (user.RoleID == 0)
+                //    user.RoleID = 1; // default role: user
+                //user.ProfileImagePath = "default.png";
+                //user.isActive = true;
+                //tekrar bakilacak
+                post.PostDate = DateTime.Now;
+                int insertedID = PostDAL.Methods.Add(post);
+                if (insertedID != -1)
+                {
+                    post.ID = insertedID;
+                    if (post.PostImage != null)
+                    {
+                        string path = PostUpload(post.ID, post.PostImage);
+                        if (path != "")
+                        {
+                            post.PostImagePath = path;
+                            PostDAL.Methods.SaveChanges(post);
+                            return Content(path);
+                        }
+                    }
+                }
+                string html = "<p>" + insertedID + "</p>";
+                return Content(html);
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+        }
 
         public string PostUpload(int PostID, HttpPostedFileBase PostPhoto)
         {
@@ -61,8 +95,8 @@ namespace NSocial.Controllers
 
             Post editPost = PostDAL.Methods.FindX(id);
             if (currentPost.ID == 1)
-            { // rolü Post ise sadece kendi hesabını düzenleyebilir.
-                if (SessionPersister.ID != editPost.ID) // kendisi mi?
+            { 
+                if (SessionPersister.ID != editPost.ID) 
                     return RedirectToAction("AuthorizationFailed");
             }
             return View(PostDAL.Methods.Find(id));
@@ -74,7 +108,7 @@ namespace NSocial.Controllers
         {
             if (Post.PostImagePath != null)
             {
-                string path = PostUpload(Post.ID, Post.PostImagePath);
+                string path = PostUpload(Post.ID, Post.PostImage);
                 if (path != "")
                 {
                     string oldPhotoPath = Server.MapPath($"~/UploadedFiles/Post/") + Post.PostImagePath;
@@ -82,9 +116,7 @@ namespace NSocial.Controllers
                     if (f.Exists)
                         f.Delete();
 
-                    //Post.PostImagePath = (HttpPostedFileBase)path;
-
-                    //eskiyi sil
+                    Post.PostImagePath = path;
                 }
             }
 
@@ -122,6 +154,8 @@ namespace NSocial.Controllers
                 return View();
             }
         }
+
+
 
     }
 }

@@ -9,10 +9,10 @@ using NSocial.ModelBase;
 
 namespace NSocial.Models
 {
-	public class Post
+	public class Post:UserBase
 	{
 		public int ID { get; set; }
-		public HttpPostedFileBase PostImagePath { get; set; }
+		public HttpPostedFileBase PostImage { get; set; }
 		public string Text { get; set; }
 		public DateTime PostDate { get; set; }
 		public int LikesCount { get; set; }
