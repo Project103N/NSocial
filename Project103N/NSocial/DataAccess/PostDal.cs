@@ -62,9 +62,6 @@ namespace NSocial.DataAccess
             return postList;
         }
 
-        //dataya ekleme kismi
-        //INSERT INTO Post(Text, PostDate, LikesCount,CommentsCount,UserID,Comments) VALUES ('asdasd', '1753-01-01 00:00:00', 5, 10,4,'asdasd')
-
 
         public int Add(Post Post)
         {
@@ -78,6 +75,9 @@ namespace NSocial.DataAccess
             cmd.Parameters.AddWithValue("@comments", Post.Comments);
             return DbTools.Connection.Create(cmd);
         }
+
+        //update kismi Talha'da
+
 
         //public bool SaveChanges(Post Post)
         //{
@@ -94,6 +94,7 @@ namespace NSocial.DataAccess
         //    return DbTools.Connection.Execute(cmd);
         //}
 
+        //Delete Talha'da
         //public bool Delete(int id)
         //{
         //    string query = $"DELETE FROM Post WHERE ID=@id;";
@@ -102,148 +103,7 @@ namespace NSocial.DataAccess
         //    return true;
         //}
 
-
-
-        ////değişimler
-
-
-
-        //public List<Post> GetPosts(SqlCommand cmd)
-        //{
-        //    List<Post> activePostList = new List<Post>();
-        //    IDataReader reader;
-        //    DbTools.Connection.ConnectDB();
-        //    try
-        //    {
-        //        reader = cmd.ExecuteReader();
-
-        //        while (reader.Read()) 
-        //        {
-        //            Post post = new Post();
-        //            post.ID = reader.GetInt32(0);
-        //            post.PostImagePath = reader["PostImagePath"].ToString();
-        //            post.Text = reader["Text"].ToString();
-        //            post.LikesCount = int.Parse(reader["LikesCount"].ToString());
-        //            post.PunchsCount = int.Parse(reader["PunchsCount"].ToString());
-        //            post.CommentsCount = int.Parse(reader["CommentsCount"].ToString());
-        //            post.UserID = int.Parse(reader["UserID"].ToString());
-        //            post.RoleID = (User)reader["UserID"];
-        //            post.Comments = (ICollection<Post>)reader["Comments"];
-
-
-
-        //            activePostList.Add(post);
-        //        }
-        //        reader.Close();
-        //        DbTools.Connection.DisconnectDB();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        DbTools.Connection.DisconnectDB();
-
-        //        throw (e);
-        //    }
-
-        //    return activePostList;
-        //}
-
-        //public Post Find(int id)
-        //{
-        //    string query = $"SELECT * FROM [Post] WHERE ID={id};";
-        //    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-        //    return GetPosts(cmd)[0];
-        //}
-
-        //public Post FindX(object obj)
-        //{
-        //    SqlCommand cmd;
-        //    string strObj = obj.ToString();
-        //    string query = "";
-        //    if (obj is int id)
-        //    {
-        //        query = $"SELECT * FROM [Post] WHERE ID={id};";
-        //        cmd = new SqlCommand(query, DbTools.Connection.con);
-        //        return GetPosts(cmd)[0];
-
-        //    }
-        //    return null;
-        //}
-        //public List<Post> All()
-        //{
-        //    string query = $"SELECT * FROM [Post] WHERE IsActive=1;";
-        //    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-        //    return GetPosts(cmd);
-        //}
-
-        //public List<Post> GetPosts(SqlCommand cmd)
-        //{
-        //    List<Post> activePostList = new List<Post>();
-        //    IDataReader reader;
-        //    DbTools.Connection.ConnectDB();
-        //    try
-        //    {
-        //        reader = cmd.ExecuteReader();
-
-        //        while (reader.Read()) // Okunacak satır varsa çalışsın.
-        //        {
-        //            Post Post = new Post();
-        //            //Post.ID = int.Parse(reader["ID"].ToString());
-        //            Post.ID = reader.GetInt32(0);
-        //            Post.Name = reader["Name"].ToString();
-        //            Post.Surname = reader["Surname"].ToString();
-        //            Post.Nickname = reader["Nickname"].ToString();
-        //            Post.ProfileImagePath = reader["ProfileImagePath"].ToString();
-        //            Post.FollowersCount = int.Parse(reader["FollowersCount"].ToString());
-        //            Post.FollowingsCount = int.Parse(reader["FollowingsCount"].ToString()); ;
-        //            Post.Email = reader["Email"].ToString();
-        //            Post.Password = reader["Password"].ToString();
-        //            Post.RoleID = int.Parse(reader["RoleID"].ToString());
-        //            Post.RegisterDate = (DateTime)(reader["RegisterDate"]);
-        //            Post.isActive = Convert.ToBoolean(reader["IsActive"].ToString());
-
-        //            activePostList.Add(Post);
-        //        }
-        //        reader.Close();
-        //        DbTools.Connection.DisconnectDB();
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        DbTools.Connection.DisconnectDB();
-
-        //        throw (e);
-        //    }
-
-        //    return activePostList;
-        //}
-
-        //public Post Find(int id)
-        //{
-        //    string query = $"SELECT * FROM [Post] WHERE ID={id} AND IsActive=1;";
-        //    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-        //    return GetPosts(cmd)[0];
-        //}
-
-        //public Post FindX(object obj)
-        //{
-        //    SqlCommand cmd;
-        //    string strObj = obj.ToString();
-        //    string query = "";
-        //    if (obj is int id)
-        //    {
-        //        query = $"SELECT * FROM [Post] WHERE ID={id} AND IsActive=1;";
-        //        cmd = new SqlCommand(query, DbTools.Connection.con);
-        //        return GetPosts(cmd)[0];
-        //    }
-        //    else if (obj is string)
-        //    {
-        //        query = $"SELECT * FROM [Post] WHERE (Nickname= @nickname or Email= @email) AND IsActive=1;";
-        //        cmd = new SqlCommand(query, DbTools.Connection.con);
-        //        cmd.Parameters.AddWithValue("@nickname", strObj);
-        //        cmd.Parameters.AddWithValue("@email", strObj);
-        //        return GetPosts(cmd)[0];
-        //    }
-        //    return null;
-        //}
-
+        //source kismi Birol'da
+        //models/post.cs kisminda yoruma aldiklarimizi yorumdan kaldirip data, controller, view kismi hafif duzenlemeler olacak
     }
 }
