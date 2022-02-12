@@ -28,30 +28,31 @@ namespace NSocial.DataAccess
         {
 
             //Post.AddressID = Convert.ToInt32(AddressDAL.Methods.Insert(Post.Address));
-            string query = $@"INSERT INTO [dbo].[Post] ([ID],[Text],[PostDate],[LikesCount],[PunchsCount],[CommentsCount],[UserID],[RoleID],[Comments]) VALUES (@text, @postDate, @likesCount, @punchCount, @commentsCount,@userId,@roleId,@comments); SELECT CAST(scope_identity() AS int);";
+            string query = $@"INSERT INTO [dbo].[Post] ([ID],[Text],[PostDate],[LikesCount],[PunchsCount],[CommentsCount],[UserID],[Comments]) VALUES (@id, @text, @postDate, @likesCount, @punchCount, @commentsCount,@userId,@comments); SELECT CAST(scope_identity() AS int);";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@id", Post.ID);
-            cmd.Parameters.AddWithValue("@text", Post.Text);
+            if (String.IsNullOrEmpty(Post.Text))
+            {
+                cmd.Parameters.AddWithValue("@text", Post.Text);
+            }
             cmd.Parameters.AddWithValue("@postDate", Post.PostDate);
             cmd.Parameters.AddWithValue("@likesCount", Post.LikesCount);
             cmd.Parameters.AddWithValue("@punchCount", Post.PunchsCount);
-            cmd.Parameters.AddWithValue("@commentCount", Post.CommentsCount);
+            cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
             cmd.Parameters.AddWithValue("@userId", Post.UserID);
-            cmd.Parameters.AddWithValue("@roleId", Post.RoleID);
             cmd.Parameters.AddWithValue("@comments", Post.Comments);
             return DbTools.Connection.Create(cmd);
         }
 
         public bool SaveChanges(Post Post)
         {
-            string query = $@"UPDATE  [dbo].[Post] SET ([ID],[Text],[PostDate],[LikesCount],[PunchsCount],[CommentsCount],[UserID],[RoleID],[Comments]) VALUES (@text, @postDate, @likesCount, @punchCount, @commentsCount,@userId,@roleId,@comments); SELECT CAST(scope_identity() AS int);";
+            string query = $@"UPDATE  [dbo].[Post] SET ([ID],[Text],[PostDate],[LikesCount],[CommentsCount],[UserID],[Comments]) VALUES (@id, @text, @postDate, @likesCount, @commentsCount, @userId, @comments); SELECT CAST(scope_identity() AS int);";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@id", Post.ID);
             cmd.Parameters.AddWithValue("@text", Post.Text);
             cmd.Parameters.AddWithValue("@postDate", Post.PostDate);
             cmd.Parameters.AddWithValue("@likesCount", Post.LikesCount);
-            cmd.Parameters.AddWithValue("@punchCount", Post.PunchsCount);
-            cmd.Parameters.AddWithValue("@commentCount", Post.CommentsCount);
+            cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
             cmd.Parameters.AddWithValue("@userId", Post.UserID);
             cmd.Parameters.AddWithValue("@roleId", Post.RoleID);
             cmd.Parameters.AddWithValue("@comments", Post.Comments);
@@ -72,7 +73,7 @@ namespace NSocial.DataAccess
 
 
 
-        public List<Post> GetUsers(SqlCommand cmd)
+        public List<Post> GetPosts(SqlCommand cmd)
         {
             List<Post> activePostList = new List<Post>();
             IDataReader reader;
@@ -115,7 +116,7 @@ namespace NSocial.DataAccess
         {
             string query = $"SELECT * FROM [Post] WHERE ID={id};";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-            return GetUsers(cmd)[0];
+            return GetPosts(cmd)[0];
         }
 
         public Post FindX(object obj)
@@ -127,7 +128,7 @@ namespace NSocial.DataAccess
             {
                 query = $"SELECT * FROM [Post] WHERE ID={id};";
                 cmd = new SqlCommand(query, DbTools.Connection.con);
-                return GetUsers(cmd)[0];
+                return GetPosts(cmd)[0];
 
             }
             return null;
