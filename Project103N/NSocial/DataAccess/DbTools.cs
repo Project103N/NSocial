@@ -9,24 +9,6 @@ namespace NSocial.DataAccess
 {
     public class DbTools
     {
-        //post kisim bunu ekledi
-        private static DbTools _Methods { get; set; }
-
-        public static DbTools Methods
-        {
-            get
-            {
-                if (_Methods == null)
-                    _Methods = new DbTools();
-                return _Methods;
-            }
-        }
-        //
-
-
-
-
-
         static string strConnection = ConfigurationManager.ConnectionStrings["NSocialCS"].ConnectionString;
         public SqlConnection con = new SqlConnection(strConnection);
         private static DbTools _Con { get; set; }

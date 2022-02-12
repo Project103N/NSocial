@@ -30,5 +30,21 @@ namespace NSocial.Controllers
             return View(posts);
         }
 
+
+
+        public ActionResult Add()
+        {
+            Post newPost = new Post();
+            return View(newPost);
+        }
+
+        [HttpPost]
+        public ActionResult Add(Post post)
+        {
+
+            TempData["insertedID"] = PostDAL.Methods.Add(post);
+            return RedirectToAction("Index");
+        }
+
     }
 }

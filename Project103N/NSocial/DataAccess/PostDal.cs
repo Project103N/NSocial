@@ -33,12 +33,13 @@ namespace NSocial.DataAccess
         {
             List<Post> postList = new List<Post>();
             IDataReader reader;
+            DbTools.Connection.ConnectDB();
             try
             {
-                DbTools.Methods.ConnectDB();
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
+                    
                     postList.Add(
                     new Post()
                     {
@@ -48,10 +49,11 @@ namespace NSocial.DataAccess
                         LikesCount = int.Parse(reader["LikesCount"].ToString()),
                         CommentsCount = int.Parse(reader["CommentsCount"].ToString()),
                         UserID = int.Parse(reader["UserID"].ToString()),
-                        Comments = (ICollection<Post>)reader["Comments"]
-                    });
+                        Comments = reader["Comments"].ToString()
+                    }) ;
                 }
-                DbTools.Methods.DisconnectDB();
+                reader.Close();
+                DbTools.Connection.DisconnectDB();
             }
             catch
             {
@@ -60,26 +62,22 @@ namespace NSocial.DataAccess
             return postList;
         }
 
+        //dataya ekleme kismi
+        //INSERT INTO Post(Text, PostDate, LikesCount,CommentsCount,UserID,Comments) VALUES ('asdasd', '1753-01-01 00:00:00', 5, 10,4,'asdasd')
 
-        //public int Add(Post Post)
-        //{
 
-        //    //Post.AddressID = Convert.ToInt32(AddressDAL.Methods.Insert(Post.Address));
-        //    string query = $@"INSERT INTO [dbo].[Post] ([ID],[Text],[PostDate],[LikesCount],[PunchsCount],[CommentsCount],[UserID],[Comments]) VALUES (@id, @text, @postDate, @likesCount, @punchCount, @commentsCount,@userId,@comments); SELECT CAST(scope_identity() AS int);";
-        //    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-        //    cmd.Parameters.AddWithValue("@id", Post.ID);
-        //    if (String.IsNullOrEmpty(Post.Text))
-        //    {
-        //        cmd.Parameters.AddWithValue("@text", Post.Text);
-        //    }
-        //    cmd.Parameters.AddWithValue("@postDate", Post.PostDate);
-        //    cmd.Parameters.AddWithValue("@likesCount", Post.LikesCount);
-        //    cmd.Parameters.AddWithValue("@punchCount", Post.PunchsCount);
-        //    cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
-        //    cmd.Parameters.AddWithValue("@userId", Post.UserID);
-        //    cmd.Parameters.AddWithValue("@comments", Post.Comments);
-        //    return DbTools.Connection.Create(cmd);
-        //}
+        public int Add(Post Post)
+        {
+            string query = $@"INSERT INTO [dbo].[Post] ([Text],[PostDate],[LikesCount],[CommentsCount],[UserID],[Comments]) VALUES (@text, @postDate, @likesCount, @commentsCount,@userId,@comments);";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@text", Post.Text);
+            cmd.Parameters.AddWithValue("@postDate", Post.PostDate);
+            cmd.Parameters.AddWithValue("@likesCount", Post.LikesCount);
+            cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
+            cmd.Parameters.AddWithValue("@userId", Post.UserID);
+            cmd.Parameters.AddWithValue("@comments", Post.Comments);
+            return DbTools.Connection.Create(cmd);
+        }
 
         //public bool SaveChanges(Post Post)
         //{
