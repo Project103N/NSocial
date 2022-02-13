@@ -118,6 +118,20 @@ namespace NSocial.DataAccess
                 throw;
             }
         }
+        public List<Post> Search(string searchterm)
+        {
+            string query = $"SELECT * FROM Post WHERE Text LIKE '%' + @searchterm + '%';";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@searchterm", searchterm);
+            try
+            {
+                return GetPostList(cmd);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         //models/post.cs kisminda yoruma aldiklarimizi yorumdan kaldirip data, controller, view kismi hafif duzenlemeler olacak
     }
 }

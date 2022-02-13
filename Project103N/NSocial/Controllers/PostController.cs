@@ -29,7 +29,12 @@ namespace NSocial.Controllers
 
             return View(posts);
         }
-
+        [HttpPost]
+        public ActionResult Index(string searchterm)
+        {
+            List<Post> searchedStudents = PostDAL.Methods.Search(searchterm);
+            return View(searchedStudents);
+        }
 
 
         public ActionResult Add()

@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<NSocial.Models.Post>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -65,9 +66,9 @@
             @Html.DisplayFor(modelItem => item.Comments)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-success" }) |
+            @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-light" }) |
+            @Html.ActionLink(linkText: "Delete", actionName: "Delete", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" })
         </td>
     </tr>
     }

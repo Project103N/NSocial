@@ -20,6 +20,13 @@ namespace NSocial.Models
 		public int CommentsCount { get; set; }
 		public int UserID { get; set; }
 		//public User RoleID { get; set; }
-		public string Comments { get; set; }
+		public string Comments { get; set; } //burası icollection olucak 
+
+
+		//yapılması gerekenler:
+		//comment kısmı icollection ile düzeltilicek, user id ye göre bir kişinin birden fazla yorumu olabilir.(mantık değişmeli)
+		//fotoğraf eklenicek ve foto kısmı detail add edit,search ve remove ile entegre olucak
+		//punch kısmı database ve diğer alanlara eklenicek
+		//authorization ve login eklentileri yapılacak
 	}
 }
