@@ -104,6 +104,20 @@ namespace NSocial.DataAccess
         //}
 
         //source kismi Birol'da
+        public Post GetByID(int id)
+        {
+            string query = $"SELECT * FROM Post WHERE ID=@id;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@id", id);
+            try
+            {
+                return GetPostList(cmd)[0];
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         //models/post.cs kisminda yoruma aldiklarimizi yorumdan kaldirip data, controller, view kismi hafif duzenlemeler olacak
     }
 }

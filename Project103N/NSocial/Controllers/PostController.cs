@@ -45,6 +45,9 @@ namespace NSocial.Controllers
             TempData["insertedID"] = PostDAL.Methods.Add(post);
             return RedirectToAction("Index");
         }
-
+        public ActionResult Details(int id)
+        {
+            return View(PostDAL.Methods.GetByID(id));
+        }
     }
 }
