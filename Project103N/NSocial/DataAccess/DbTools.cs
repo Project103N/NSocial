@@ -92,5 +92,44 @@ namespace NSocial.DataAccess
                 return false;
         }
 
+        //-----------------------------------------------------------
+        public int Delete(SqlCommand cmd)
+        {
+            object insertedID = -1;
+            try
+            {
+                ConnectDB();
+                insertedID = cmd.ExecuteScalar();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                DisconnectDB();
+            }
+            return Convert.ToInt32(insertedID);
+        }
+
+        public int Edit(SqlCommand cmd)
+        {
+            object insertedID = -1;
+            try
+            {
+                ConnectDB();
+                insertedID = cmd.ExecuteScalar();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                DisconnectDB();
+            }
+            return Convert.ToInt32(insertedID);
+        }
+
     }
 }

@@ -54,5 +54,41 @@ namespace NSocial.Controllers
         {
             return View(PostDAL.Methods.GetByID(id));
         }
+
+        //------------------------
+        //------------------------EDİT------------------------------------
+        public ActionResult Edit(int id)
+        {
+            return View(PostDAL.Methods.GetByID(id));
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Post post)
+        {
+            int affectedRows = PostDAL.Methods.Edit(post);
+            if (affectedRows > 0)
+                TempData["editmessage"] = "Edit successfull!!!";
+            else
+                TempData["editmessage"] = "Error on edit!!!";
+            return RedirectToAction("Index");
+        }
+
+        //------------------------DELETE------------------------------------
+        public ActionResult Delete(int id)
+        {
+            return View(PostDAL.Methods.GetByID(id));
+        }
+
+        [HttpPost]
+        public ActionResult Delete(Post post)
+        {
+            int affectedRows = PostDAL.Methods.Delete(post.ID);
+            if (affectedRows > 0)
+                TempData["deletemessage"] = "Delete successfull!!!";
+            else
+                TempData["deletemessage"] = "Error on delete!!!";
+            return RedirectToAction("Index");
+        }
+
     }
 }

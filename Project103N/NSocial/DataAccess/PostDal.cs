@@ -78,30 +78,25 @@ namespace NSocial.DataAccess
 
         //update kismi Talha'da
 
-
-        //public bool SaveChanges(Post Post)
-        //{
-        //    string query = $@"UPDATE  [dbo].[Post] SET ([ID],[Text],[PostDate],[LikesCount],[CommentsCount],[UserID],[Comments]) VALUES (@id, @text, @postDate, @likesCount, @commentsCount, @userId, @comments); SELECT CAST(scope_identity() AS int);";
-        //    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-        //    cmd.Parameters.AddWithValue("@id", Post.ID);
-        //    cmd.Parameters.AddWithValue("@text", Post.Text);
-        //    cmd.Parameters.AddWithValue("@postDate", Post.PostDate);
-        //    cmd.Parameters.AddWithValue("@likesCount", Post.LikesCount);
-        //    cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
-        //    cmd.Parameters.AddWithValue("@userId", Post.UserID);
-        //    cmd.Parameters.AddWithValue("@roleId", Post.RoleID);
-        //    cmd.Parameters.AddWithValue("@comments", Post.Comments);
-        //    return DbTools.Connection.Execute(cmd);
-        //}
+        public int Edit(Post post)
+        {
+            string query = $@"UPDATE [dbo].[Post] SET [Text]=@text WHERE [ID]=@id;";
+            //string query = $@"UPDATE [dbo].[User] SET ([ID],[Text]) VALUES (@id,@text); SELECT CAST(scope_identity() AS int);";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@text", post.Text);
+            cmd.Parameters.AddWithValue("@id", post.ID);
+            return DbTools.Connection.Edit(cmd);
+        }
+        public int Delete(int id)
+        {
+            string query = $"DELETE FROM Post WHERE ID=@id;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@id", id);
+            return DbTools.Connection.Delete(cmd);
+        }
 
         //Delete Talha'da
-        //public bool Delete(int id)
-        //{
-        //    string query = $"DELETE FROM Post WHERE ID=@id;";
-        //    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-        //    cmd.Parameters.AddWithValue("@id", id);
-        //    return true;
-        //}
+        
 
         //source kismi Birol'da
         public Post GetByID(int id)
