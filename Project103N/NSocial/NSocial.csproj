@@ -195,7 +195,6 @@
     <Content Include="Views\Post\Edit.cshtml" />
     <Content Include="Views\User\FollowList.cshtml" />
     <Content Include="Views\User\FriendList.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
