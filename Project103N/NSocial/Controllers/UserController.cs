@@ -164,5 +164,9 @@ namespace NSocial.Controllers
                 return View();
             }
         }
+        public ActionResult FriendList()
+        {
+            return View();
+        }
     }
 }
