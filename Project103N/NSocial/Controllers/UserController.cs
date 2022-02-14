@@ -168,8 +168,9 @@ namespace NSocial.Controllers
         public ActionResult Follow(int id)
         {
             FollowDAL.Methods.FriendRequest(id);
-            int sayi1 = FollowDAL.Methods.GetFollowing(SessionPersister.ID);
-            int sayi2 = FollowDAL.Methods.GetFollower(SessionPersister.ID);
+            User user = new User();
+            user.FollowingsCount = FollowDAL.Methods.GetFollowing(SessionPersister.ID);
+            user.FollowersCount = FollowDAL.Methods.GetFollower(SessionPersister.ID);
             return View();
         }
     }
