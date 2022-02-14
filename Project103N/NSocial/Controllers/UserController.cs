@@ -164,5 +164,13 @@ namespace NSocial.Controllers
                 return View();
             }
         }
+
+        public ActionResult Follow(int id)
+        {
+            FollowDAL.Methods.FriendRequest(id);
+            int sayi1 = FollowDAL.Methods.GetFollowing(SessionPersister.ID);
+            int sayi2 = FollowDAL.Methods.GetFollower(SessionPersister.ID);
+            return View();
+        }
     }
 }
