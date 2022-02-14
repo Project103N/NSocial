@@ -164,5 +164,39 @@ namespace NSocial.Controllers
                 return View();
             }
         }
+
+        public ActionResult FollowList()
+        {
+            return View();
+        }
+
+        public ActionResult GetFollower()
+        {
+            return View(UserDAL.Methods.All());
+        }
+
+        public ActionResult Follow(User user)
+        {
+            try
+            {
+                FollowDAL.Methods.FriendRequest(user.ID);
+               
+  
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+
+            
+        }
+
+        public ActionResult FriendList()
+        {
+            return View();
+        }
+
+
     }
 }

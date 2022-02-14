@@ -64,6 +64,7 @@ namespace NSocial.DataAccess
             return DbTools.Connection.Execute(cmd); // Kabul etmişse true etmemmişse false dönderecek.
 
         }
+
         // Arkadaşlığı kabul edince IsAccepted ı true yapma
         public void FriendRequestAccepted(int id)
         {

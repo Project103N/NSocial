@@ -19,7 +19,7 @@ namespace NSocial.Security
                 filterContext.Result = new RedirectToRouteResult(new
                     RouteValueDictionary(new
                     { // Eğer HttpContext.Current.Session["email"] boş yada null ise Login sayfasına yönlendir.
-                        controller = "User",
+                        controller = "Login",
                         action = "Login"
                     }));
             } 

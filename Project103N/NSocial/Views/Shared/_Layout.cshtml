@@ -41,7 +41,7 @@
                     @if (isAuth)
                     {
                         @*<li><a class="btn btn-warning" href="/User/Details/@user.ID">@user.Email</a></li>*@
-
+                        <li>@Html.ActionLink("İstek Listesi", "FriendList", "User")</li>
                         <li>@Html.ActionLink(@user.Name + " " + @user.Surname, "Details", "User", new { id = user.ID }, new { @class = "btn btn-success " })</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-danger" })</li>
                     }
