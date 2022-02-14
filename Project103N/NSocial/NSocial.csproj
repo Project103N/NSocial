@@ -194,8 +194,12 @@
     <Content Include="Views\Post\Delete.cshtml" />
     <Content Include="Views\Post\Edit.cshtml" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <Content Include="Views\User\FollowList.cshtml" />
     <Content Include="Views\User\FriendList.cshtml" />
+=======
+    <Content Include="Views\User\Profile.cshtml" />
+>>>>>>> Stashed changes
 =======
     <Content Include="Views\User\Profile.cshtml" />
 >>>>>>> Stashed changes

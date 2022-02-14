@@ -168,6 +168,7 @@ namespace NSocial.Controllers
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         public ActionResult FollowList()
         {
             return View();
@@ -202,10 +203,15 @@ namespace NSocial.Controllers
 
 
 =======
+=======
+>>>>>>> Stashed changes
        public ActionResult Profile()
         {
             return View();
         }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 }
