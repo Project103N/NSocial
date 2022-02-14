@@ -193,6 +193,8 @@
     <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Post\Delete.cshtml" />
     <Content Include="Views\Post\Edit.cshtml" />
+    <Content Include="Views\User\FollowList.cshtml" />
+    <Content Include="Views\User\FriendList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
