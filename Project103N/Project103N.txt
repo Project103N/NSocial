@@ -17,10 +17,10 @@ Home(Controller,View): Gamze, Esra, Erdem
 
 Follow (Model,DAL,Controller,View,SQL): Hakan,Emre,Salih
 ------
-	public int ID { get; set; }
-	public int FollowerID { get; set; }
-	public int FollowedID { get; set; }
-	false:public bool IsAccepted { get; set; } // default:false
+	--public int ID { get; set; }
+	(PRIMARY KEY)public int FollowerID { get; set; }
+	(PRIMARY KEY)public int FollowedID { get; set; }
+	false:public bool IsAccepted { get; set; } // default:false 1 
 
 	public User Follower {get;set;}
 	public User Followed {get;set;}
