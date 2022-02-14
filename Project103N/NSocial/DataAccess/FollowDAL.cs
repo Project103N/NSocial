@@ -82,6 +82,7 @@ namespace NSocial.DataAccess
 
         }
 
+
         // Kabul etti mi etmedi mi ?
         public bool IsAccepted(int id)
         {

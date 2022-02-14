@@ -175,6 +175,7 @@ namespace NSocial.Controllers
             return View(UserDAL.Methods.All());
         }
 
+
         public ActionResult Follow(User user)
         {
             try
