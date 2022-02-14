@@ -3,3 +3,7 @@
 obj/Debug
 obj/
 Project103N/NSocial/Web.config
+*.config
+*.pdb
+*.cache
+NSocial.csproj
