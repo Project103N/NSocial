@@ -94,11 +94,7 @@ namespace NSocial.DataAccess
             catch (Exception e)
             {
 
-                throw e;
-            }
-            
         }
-        // Buttondan id geliyor
         // Arkadaşlığı kabul edince IsAccepted ı true yapma
         public void FriendRequestAccepted(int id)
         {
