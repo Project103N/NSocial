@@ -1,157 +1,65 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿
+@{
+    ViewBag.Title = "Profile";
+    
 }
-
-
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <style>
+    body {
+        margin-top: 20px;
+        background: #eee;
+    }
 
-        body {
-            margin-top: 20px;
-            background: #e7ebf2;
-        }
-        /*
-    Profile
-    */
-        .si-border-round {
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            -ms-border-radius: 50%;
-            border-radius: 50%;
-        }
+    .profile-widget {
+        position: relative;
+    }
 
-        .social-icon-sm {
-            margin: 0 5px 5px 0;
-            width: 30px;
-            height: 30px;
-            font-size: 18px;
-            line-height: 30px !important;
-            color: #555;
-            text-shadow: none;
-            border-radius: 3px;
-            overflow: hidden;
-            display: block;
-            float: left;
-            text-align: center;
-            border: 1px solid #AAA;
-        }
-
-        .tabs-admin > .nav-item > .nav-link.active {
-            border-color: #0073ff;
-            color: #0073ff;
-        }
-
-        .tabs-admin > .nav-item > .nav-link {
-            padding: 10px 15px;
-            color: #555;
-            font-weight: 600;
-            text-transform: capitalize;
-            margin-bottom: -2px;
-            border-bottom: 2px solid transparent;
-        }
-
-        .act-content span.text-small {
-            display: block;
-            color: #999;
-            margin-bottom: 10px;
-            font-size: 12px;
-        }
-
-        .text-small {
-            font-size: 12px !important;
-        }
-
-        .admin-tab-content {
-            padding: 10px 15px;
-        }
-
-        .pt30 {
-            padding-top: 30px !important;
-        }
-
-        .card .card-title {
-            -ms-flex: 1 1 auto;
-            flex: 1 1 auto;
-            min-height: 28px;
-            margin: 0;
-            font-size: .9rem;
-            font-weight: 600;
-            line-height: 28px;
-        }
-
-        .mb20 {
-            margin-bottom: 20px !important;
-        }
-
-        .pb20 {
-            padding-bottom: 20px !important;
-        }
-
-        .pt20 {
-            padding-top: 20px !important;
-        }
-
-        .text-small {
-            font-size: 12px !important;
-        }
-
-        .text-muted {
-            color: #999 !important;
-        }
-
-        .card .card-content {
-            padding: 15px 15px;
-        }
-
-        .profile-header {
+        .profile-widget .image-container {
             background-size: cover;
-            position: relative;
-            overflow: hidden;
+            background-position: center;
+            padding: 190px 0 10px;
         }
 
-            .profile-header .img-fluid.rounded-circle {
-                max-width: 100px;
-                margin: 0 auto;
-                margin-bottom: 20px;
+            .profile-widget .image-container .profile-background {
+                width: 100%;
+                height: auto;
+            }
+
+            .profile-widget .image-container .avatar {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                margin: 0 auto -60px;
                 display: block;
             }
 
-        .activity-list > li {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-
-        .activity-list .float-left {
-            margin-right: 10px;
-            width: 40px;
-            height: 40px;
-            float: left;
-            display: block;
-            border-radius: 50%;
-            background-color: #eee;
-            font-size: 20px;
-            line-height: 100%;
-            line-height: 43px;
+        .profile-widget .details {
+            padding: 50px 15px 15px;
             text-align: center;
         }
+    /* End Component: Profile Widget */
+    /********************************************************************
+*********************************************************************
+*********************************************************************/
+    /* Component: Mini Profile Widget */
+    .mini-profile-widget .image-container .avatar {
+        width: 180px;
+        height: 180px;
+        display: block;
+        margin: 0 auto;
+        border-radius: 50%;
+        background: white;
+        padding: 4px;
+        border: 1px solid #dddddd;
+    }
 
-            .activity-list .float-left a {
-                display: inline-block;
-                color: #999;
-            }
+    .mini-profile-widget .details {
+        text-align: center;
+    }
 
-        .act-content {
-            overflow: hidden;
-        }
 
-            .act-content span.text-small {
-                display: block;
-                color: #999;
-                margin-bottom: 10px;
-                font-size: 12px;
-            }
+
+    /* Component: Panel */
     .panel {
         border-radius: 0;
         margin-bottom: 30px;
@@ -563,46 +471,47 @@
         }
 </style>
 <body>
-
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     <div class="container">
-
         <div class="row">
-            <div class="col-md-4 mb30">
-                <div class="card">
-
-                    <div class="card-content pt20 pb20 profile-header">
-                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" class="img-fluid rounded-circle">
-                        <h4 class="card-title text-center mb20">Adam Voges</h4>
-                        <p>
-                            Hello, I am Adam Voges from London, I am a professional designer at design_mylife. I hope you enjoy the Assan Templates and how its updated every month
-
-                        </p>
-                       
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-4 mb20">
-                                <h5>947</h5>
-                                <h6 class="text-small text-muted">Followers</h6>
-                            </div>
-                            <div class="col-md-4 mb20">
-                                <h5>583</h5>
-                                <h6 class="text-small text-muted">Tweets</h6>
-                            </div>
-                            <div class="col-md-4 mb20">
-                                <h5>48</h5>
-                                <h6 class="text-small text-muted">Posts</h6>
+            <div class="col-sm-8 col-sm-offset-2">
+                <div class="panel panel-white profile-widget">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="image-container bg2" style="background:url(http://www.bootdey.com/img/Content/flores-amarillas-wallpaper.jpeg)">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" class="avatar" alt="avatar">
                             </div>
                         </div>
-                        
+                        <div class="col-sm-12">
+                            <div class="details">
+                                <h4>John Smit Doe <i class="fa fa-sheild"></i></h4>
+                                <div>Works at Bootdey.com</div>
+                                <div>Attended University of Bootdey</div>
+                                <div>Lives in Medellin, Colombia</div>
+                                <div class="mg-top-10">
+                                    <div class="row " >
+                                        <div class="col-md-4 my-3  mb20" style="width:200px; margin-left:120px">
+                                            <h5>947</h5>
+                                            <h6 class="text-small text-muted">Followers</h6>
+                                        </div>
+                                        <div class="col-md-4 my-3 mb20" style="width:200px">
+                                            <h5>583</h5>
+                                            <h6 class="text-small text-muted">Tweets</h6>
+                                        </div>
+                                        <div class="col-md-4 my-3 mb20" style="width:200px">
+                                            <h5>48</h5>
+                                            <h6 class="text-small text-muted">Posts</h6>
+                                        </div>
+                                    </div>
 
+                                    <a href="#" class="btn btn-success">Follow</a>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
-                    <!--content-->
-
                 </div>
-            </div>
-            <div class="col-md-8 mb30">
+
                 <div class="row">
 
                     <div class="col-sm-12">
@@ -807,7 +716,9 @@
                     </div>
 
                 </div>
+
             </div>
+
         </div>
     </div>
 </body>

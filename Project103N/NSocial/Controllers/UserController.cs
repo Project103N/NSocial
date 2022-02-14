@@ -13,7 +13,7 @@ using NSocial.ViewModels;
 
 namespace NSocial.Controllers
 {
-    [CustomAuthorize(Roles = "superadmin")]
+    //[CustomAuthorize(Roles = "superadmin")]
     public class UserController : Controller
     {
         static string strConnection = ConfigurationManager.ConnectionStrings["NSocialCS"].ConnectionString;
@@ -31,12 +31,14 @@ namespace NSocial.Controllers
             return View(UserDAL.Methods.Find(id));
         }
 
+        [AllowAnonymous]
         // GET: User/Create
         public ActionResult Register()
         {
             return View();
         }
 
+        [AllowAnonymous]
         // POST: User/Create
         // TODO: We will add short register form later.
         [HttpPost] // From Form
@@ -165,6 +167,7 @@ namespace NSocial.Controllers
             }
         }
 
+<<<<<<< Updated upstream
         public ActionResult FollowList()
         {
             return View();
@@ -198,5 +201,11 @@ namespace NSocial.Controllers
         }
 
 
+=======
+       public ActionResult Profile()
+        {
+            return View();
+        }
+>>>>>>> Stashed changes
     }
 }
