@@ -139,23 +139,6 @@ namespace NSocial.DataAccess
             return null;
         }
 
-
-
-
-        //public User GetByEmail(string email)
-        //{
-        //    string query = $"SELECT * FROM [User] WHERE Email='{email}';";
-        //    try
-        //    {
-        //        return ListUser(query)[0];
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return new User();
-        //    }
-        //}
-
-
         //public User Login(string email, string password)
         //{
         //    string query = $"SELECT * FROM [User] WHERE Email='{email}' AND Password='{password}';";
