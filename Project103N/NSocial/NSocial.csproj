@@ -196,12 +196,18 @@
     <Content Include="Views\Post\Details.cshtml" />
     <Content Include="Views\Post\Delete.cshtml" />
     <Content Include="Views\Post\Edit.cshtml" />
+
     <Content Include="Views\User\FriendList.cshtml" />
     <Content Include="Views\Reaction\Dislike.cshtml" />
     <Content Include="Views\Reaction\Like.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Home\Index - Copy.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
+
+    <Content Include="Views\Post\Add.cshtml" />
+    <Content Include="Views\Post\Profile.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
