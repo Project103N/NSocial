@@ -172,6 +172,8 @@ namespace NSocial.Controllers
         public ActionResult Accept(int id)
         {
             FollowDAL.Methods.FriendRequestAccepted(id);
+            FollowDAL.Methods.AddFollowing(id);
+            FollowDAL.Methods.AddFollower(id);
             return RedirectToAction("FriendList");
         }
 
@@ -202,6 +204,28 @@ namespace NSocial.Controllers
         {
             List<User> NewUser = new List<User>();
             List<User> List= FollowDAL.Methods.WaitingRequestsList();
+            foreach (var item in List)
+            {
+                NewUser.Add(FollowDAL.Methods.GetByID(item.ID));
+            }
+            return View(NewUser);
+        }
+
+        public ActionResult ToSeeFollowingList()
+        {
+            List<User> NewUser = new List<User>();
+            List<User> List= FollowDAL.Methods.ShowMyFollowings();
+            foreach (var item in List)
+            {
+                NewUser.Add(FollowDAL.Methods.GetByID(item.ID));
+            }
+            return View(NewUser);
+        }
+
+        public ActionResult ToSeeFollowerList()
+        {
+            List<User> NewUser = new List<User>();
+            List<User> List = FollowDAL.Methods.ShowMyFollower();
             foreach (var item in List)
             {
                 NewUser.Add(FollowDAL.Methods.GetByID(item.ID));

@@ -199,6 +199,8 @@
     <Content Include="Views\User\FriendList.cshtml" />
     <Content Include="Views\Reaction\Dislike.cshtml" />
     <Content Include="Views\Reaction\Like.cshtml" />
+    <Content Include="Views\User\ToSeeFollowingList.cshtml" />
+    <Content Include="Views\User\ToSeeFollowerList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

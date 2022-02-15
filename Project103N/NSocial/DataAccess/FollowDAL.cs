@@ -121,11 +121,11 @@ namespace NSocial.DataAccess
 
         //Ben kaç kişiyi takip ediyorum ve
         // Arkadaş eklediyse toplam arkadaşı user tablosuna yazma
-        public void AddFollower()
+        public void AddFollower(int id)
         {
             try
             {
-                string query = $"SELECT COUNT(*) as count from [Follow] where FollowerID={SessionPersister.ID} and IsAccepted=1;";
+                string query = $"SELECT COUNT(*) as count from [Follow] where FollowedID={SessionPersister.ID} and IsAccepted=1;";
                 SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
                 int count = Count(cmd);
                 FollowerCountAdd(count);
@@ -139,14 +139,14 @@ namespace NSocial.DataAccess
         }
         /// Kaç kişi bizi takip ediyor
         /// Arkadaş eklediyse toplam arkadaşı user tablosuna yazma
-        public void AddFollowing()
+        public void AddFollowing(int id)
         {
             try
             {
-                string query = $"SELECT COUNT(*) as count from [Follow] where FollowedID={SessionPersister.ID} and IsAccepted=1;";
+                string query = $"SELECT COUNT(*) as count from [Follow] where FollowerID={id} and IsAccepted=1;";
                 SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
                 int count = Count(cmd);
-                FollowingsCountAdd(count);
+                FollowingsCountAdd(count,id);
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace NSocial.DataAccess
                 //update[User] set [FollowersCount] = 1 where ID = 3;
                 SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
                 cmd.Parameters.AddWithValue("@followerscount", count);
-                cmd.Parameters.AddWithValue("@id", SessionPersister.ID);
+                cmd.Parameters.AddWithValue("@id",SessionPersister.ID);
 
                 DbTools.Connection.Execute(cmd);
             }
@@ -199,13 +199,13 @@ namespace NSocial.DataAccess
 
         }
         // followingscount  e yazma
-        public void FollowingsCountAdd(int count)
+        public void FollowingsCountAdd(int count,int id)
         {
             string query = $@"UPDATE [dbo].[User] SET [FollowingsCount]=@followerscount WHERE [ID]=@id;";
             //update[User] set [FollowersCount] = 1 where ID = 3;
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@followerscount", count);
-            cmd.Parameters.AddWithValue("@id", SessionPersister.ID);
+            cmd.Parameters.AddWithValue("@id", id);
 
             DbTools.Connection.Execute(cmd);
         }
@@ -216,7 +216,7 @@ namespace NSocial.DataAccess
 
             string query = $"SELECT FollowedID FROM [Follow] WHERE FollowerID={SessionPersister.ID} and IsAccepted = 1;";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-            return GetRequestList(cmd);
+            return GetRequestID(cmd);
         }
         //Beni takip eden kişilerin id sini dönderir
 
@@ -224,7 +224,7 @@ namespace NSocial.DataAccess
         {
             string query = $"SELECT FollowerID FROM [Follow] WHERE FollowedID={SessionPersister.ID} and IsAccepted = 1;";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-            return GetRequestList(cmd);
+            return GetRequestID(cmd);
         }
         public User GetByID(int id)
         {
