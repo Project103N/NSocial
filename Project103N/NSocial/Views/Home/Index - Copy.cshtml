@@ -1,0 +1,814 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+
+@*<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">*@
+<style>
+
+        body {
+            margin-top: 20px;
+            background: #e7ebf2;
+        }
+        /*
+    Profile
+    */
+        .si-border-round {
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            border-radius: 50%;
+        }
+
+        .social-icon-sm {
+            margin: 0 5px 5px 0;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            line-height: 30px !important;
+            color: #555;
+            text-shadow: none;
+            border-radius: 3px;
+            overflow: hidden;
+            display: block;
+            float: left;
+            text-align: center;
+            border: 1px solid #AAA;
+        }
+
+        .tabs-admin > .nav-item > .nav-link.active {
+            border-color: #0073ff;
+            color: #0073ff;
+        }
+
+        .tabs-admin > .nav-item > .nav-link {
+            padding: 10px 15px;
+            color: #555;
+            font-weight: 600;
+            text-transform: capitalize;
+            margin-bottom: -2px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .act-content span.text-small {
+            display: block;
+            color: #999;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+
+        .text-small {
+            font-size: 12px !important;
+        }
+
+        .admin-tab-content {
+            padding: 10px 15px;
+        }
+
+        .pt30 {
+            padding-top: 30px !important;
+        }
+
+        .card .card-title {
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            min-height: 28px;
+            margin: 0;
+            font-size: .9rem;
+            font-weight: 600;
+            line-height: 28px;
+        }
+
+        .mb20 {
+            margin-bottom: 20px !important;
+        }
+
+        .pb20 {
+            padding-bottom: 20px !important;
+        }
+
+        .pt20 {
+            padding-top: 20px !important;
+        }
+
+        .text-small {
+            font-size: 12px !important;
+        }
+
+        .text-muted {
+            color: #999 !important;
+        }
+
+        .card .card-content {
+            padding: 15px 15px;
+        }
+
+        .profile-header {
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .profile-header .img-fluid.rounded-circle {
+                max-width: 100px;
+                margin: 0 auto;
+                margin-bottom: 20px;
+                display: block;
+            }
+
+        .activity-list > li {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+
+        .activity-list .float-left {
+            margin-right: 10px;
+            width: 40px;
+            height: 40px;
+            float: left;
+            display: block;
+            border-radius: 50%;
+            background-color: #eee;
+            font-size: 20px;
+            line-height: 100%;
+            line-height: 43px;
+            text-align: center;
+        }
+
+            .activity-list .float-left a {
+                display: inline-block;
+                color: #999;
+            }
+
+        .act-content {
+            overflow: hidden;
+        }
+
+            .act-content span.text-small {
+                display: block;
+                color: #999;
+                margin-bottom: 10px;
+                font-size: 12px;
+            }
+    .panel {
+        border-radius: 0;
+        margin-bottom: 30px;
+    }
+
+        .panel.solid-color {
+            color: white;
+        }
+
+        .panel .panel-heading {
+            border-radius: 0;
+            position: relative;
+        }
+
+            .panel .panel-heading > .controls {
+                position: absolute;
+                right: 10px;
+                top: 12px;
+            }
+
+                .panel .panel-heading > .controls .nav.nav-pills {
+                    margin: -8px 0 0 0;
+                }
+
+                    .panel .panel-heading > .controls .nav.nav-pills li a {
+                        padding: 5px 8px;
+                    }
+
+            .panel .panel-heading .clickable {
+                margin-top: 0px;
+                font-size: 12px;
+                cursor: pointer;
+            }
+
+            .panel .panel-heading.no-heading-border {
+                border-bottom-color: transparent;
+            }
+
+            .panel .panel-heading .left {
+                float: left;
+            }
+
+            .panel .panel-heading .right {
+                float: right;
+            }
+
+        .panel .panel-title {
+            font-size: 16px;
+            line-height: 20px;
+        }
+
+            .panel .panel-title.panel-title-sm {
+                font-size: 18px;
+                line-height: 28px;
+            }
+
+            .panel .panel-title.panel-title-lg {
+                font-size: 24px;
+                line-height: 34px;
+            }
+
+        .panel .panel-body {
+            font-size: 13px;
+        }
+
+            .panel .panel-body > .body-section {
+                margin: 0px 0px 20px;
+            }
+
+                .panel .panel-body > .body-section > .section-heading {
+                    margin: 0px 0px 5px;
+                    font-weight: bold;
+                }
+
+                .panel .panel-body > .body-section > .section-content {
+                    margin: 0px 0px 10px;
+                }
+
+    .panel-white {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-white > .panel-heading {
+            color: #333;
+            background-color: #fff;
+            border-color: #ddd;
+        }
+
+        .panel-white > .panel-footer {
+            background-color: #fff;
+            border-color: #ddd;
+        }
+
+    .panel-primary {
+        border: 1px solid #dddddd;
+    }
+
+    .panel-purple {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-purple > .panel-heading {
+            color: #fff;
+            background-color: #8e44ad;
+            border: none;
+        }
+
+            .panel-purple > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-light-purple {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-light-purple > .panel-heading {
+            color: #fff;
+            background-color: #9b59b6;
+            border: none;
+        }
+
+            .panel-light-purple > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-blue,
+    .panel-info {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-blue > .panel-heading,
+        .panel-info > .panel-heading {
+            color: #fff;
+            background-color: #2980b9;
+            border: none;
+        }
+
+            .panel-blue > .panel-heading .panel-title a:hover,
+            .panel-info > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-light-blue {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-light-blue > .panel-heading {
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+        }
+
+            .panel-light-blue > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-green,
+    .panel-success {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-green > .panel-heading,
+        .panel-success > .panel-heading {
+            color: #fff;
+            background-color: #27ae60;
+            border: none;
+        }
+
+            .panel-green > .panel-heading .panel-title a:hover,
+            .panel-success > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-light-green {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-light-green > .panel-heading {
+            color: #fff;
+            background-color: #2ecc71;
+            border: none;
+        }
+
+            .panel-light-green > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-orange,
+    .panel-warning {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-orange > .panel-heading,
+        .panel-warning > .panel-heading {
+            color: #fff;
+            background-color: #e82c0c;
+            border: none;
+        }
+
+            .panel-orange > .panel-heading .panel-title a:hover,
+            .panel-warning > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-light-orange {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-light-orange > .panel-heading {
+            color: #fff;
+            background-color: #ff530d;
+            border: none;
+        }
+
+            .panel-light-orange > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-red,
+    .panel-danger {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-red > .panel-heading,
+        .panel-danger > .panel-heading {
+            color: #fff;
+            background-color: #d40d12;
+            border: none;
+        }
+
+            .panel-red > .panel-heading .panel-title a:hover,
+            .panel-danger > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-light-red {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-light-red > .panel-heading {
+            color: #fff;
+            background-color: #ff1d23;
+            border: none;
+        }
+
+            .panel-light-red > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-pink {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-pink > .panel-heading {
+            color: #fff;
+            background-color: #fe31ab;
+            border: none;
+        }
+
+            .panel-pink > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-light-pink {
+        border: 1px solid #dddddd;
+    }
+
+        .panel-light-pink > .panel-heading {
+            color: #fff;
+            background-color: #fd32c0;
+            border: none;
+        }
+
+            .panel-light-pink > .panel-heading .panel-title a:hover {
+                color: #f0f0f0;
+            }
+
+    .panel-group .panel {
+        border-radius: 0;
+    }
+
+        .panel-group .panel + .panel {
+            margin-top: 0;
+            border-top: 0;
+        }
+
+    /* Component: Posts */
+    .post .post-heading {
+        height: 95px;
+        padding: 20px 15px;
+    }
+
+        .post .post-heading .avatar {
+            width: 60px;
+            height: 60px;
+            display: block;
+            margin-right: 15px;
+        }
+
+        .post .post-heading .meta .title {
+            margin-bottom: 0;
+        }
+
+            .post .post-heading .meta .title a {
+                color: black;
+            }
+
+                .post .post-heading .meta .title a:hover {
+                    color: #aaaaaa;
+                }
+
+        .post .post-heading .meta .time {
+            margin-top: 8px;
+            color: #999;
+        }
+
+    .post .post-image .image {
+        width: 100%;
+        height: auto;
+    }
+
+    .post .post-description {
+        padding: 15px;
+    }
+
+        .post .post-description p {
+            font-size: 14px;
+        }
+
+        .post .post-description .stats {
+            margin-top: 20px;
+        }
+
+            .post .post-description .stats .stat-item {
+                display: inline-block;
+                margin-right: 15px;
+            }
+
+                .post .post-description .stats .stat-item .icon {
+                    margin-right: 8px;
+                }
+
+    .post .post-footer {
+        border-top: 1px solid #ddd;
+        padding: 15px;
+    }
+
+        .post .post-footer .input-group-addon a {
+            color: #454545;
+        }
+
+        .post .post-footer .comments-list {
+            padding: 0;
+            margin-top: 20px;
+            list-style-type: none;
+        }
+
+            .post .post-footer .comments-list .comment {
+                display: block;
+                width: 100%;
+                margin: 20px 0;
+            }
+
+                .post .post-footer .comments-list .comment .avatar {
+                    width: 35px;
+                    height: 35px;
+                }
+
+                .post .post-footer .comments-list .comment .comment-heading {
+                    display: block;
+                    width: 100%;
+                }
+
+                    .post .post-footer .comments-list .comment .comment-heading .user {
+                        font-size: 14px;
+                        font-weight: bold;
+                        display: inline;
+                        margin-top: 0;
+                        margin-right: 10px;
+                    }
+
+                    .post .post-footer .comments-list .comment .comment-heading .time {
+                        font-size: 12px;
+                        color: #aaa;
+                        margin-top: 0;
+                        display: inline;
+                    }
+
+                .post .post-footer .comments-list .comment .comment-body {
+                    margin-left: 50px;
+                }
+
+                .post .post-footer .comments-list .comment > .comments-list {
+                    margin-left: 50px;
+                }
+
+    .fluid-width-video-wrapper {
+        width: 100%;
+        position: relative;
+        padding: 0;
+    }
+
+        .fluid-width-video-wrapper iframe, .fluid-width-video-wrapper object, .fluid-width-video-wrapper embed {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+</style>
+
+<body>
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-4 mb30">
+                <div class="card">
+
+                    <div class="card-content pt20 pb20 profile-header">
+                        <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="" class="img-fluid rounded-circle">
+                        <h4 class="card-title text-center mb20">Adam Voges</h4>
+                        <p>
+                            Hello, I am Adam Voges from London, I am a professional designer at design_mylife. I hope you enjoy the Assan Templates and how its updated every month
+
+                        </p>
+                       
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-4 mb20">
+                                <h5>947</h5>
+                                <h6 class="text-small text-muted">Followers</h6>
+                            </div>
+                            <div class="col-md-4 mb20">
+                                <h5>583</h5>
+                                <h6 class="text-small text-muted">Tweets</h6>
+                            </div>
+                            <div class="col-md-4 mb20">
+                                <h5>48</h5>
+                                <h6 class="text-small text-muted">Posts</h6>
+                            </div>
+                        </div>
+                        
+
+
+                    </div>
+                    <!--content-->
+
+                </div>
+            </div>
+            <div class="col-md-8 mb30">
+                <div class="row">
+
+                    <div class="col-sm-12">
+                        <div class="panel panel-white post">
+                            <div class="post-heading">
+                                <div class="pull-left image">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle avatar" alt="user profile image">
+                                </div>
+                                <div class="pull-left meta">
+                                    <div class="title h5">
+                                        <a href="#"><b>John Doe</b></a>
+                                        uploaded a photo.
+                                    </div>
+                                    <h6 class="text-muted time">5 seconds ago</h6>
+                                </div>
+                            </div>
+                            <div class="post-image">
+                                <img src=""><img src="https://via.placeholder.com/400x200" class="image" alt="image post">
+                            </div>
+                            <div class="post-description">
+                                <h4>Product Shoot</h4>
+                                <p>Here is a picture of the walkway to our product shoot.</p>
+                                <div class="stats">
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-thumbs-up icon"></i>228
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-thumbs-down icon"></i>228
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-share icon"></i>128
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="post-footer">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Add a comment" type="text">
+                                    <span class="input-group-addon">
+                                        <a href="javascript:void(0);"><i class="fa fa-edit"></i></a>
+                                    </span>
+                                </div>
+                                <ul class="comments-list">
+                                    <li class="comment">
+                                        <a class="pull-left" href="javascript:void(0);">
+                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">John dOE</h4>
+                                                <h5 class="time">7 minutes ago</h5>
+                                            </div>
+                                            <p>I really love this picture. I really wish i could have been there.</p>
+                                        </div>
+                                    </li>
+                                    <li class="comment">
+                                        <a class="pull-left" href="javascript:void(0);">
+                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">John Doe</h4>
+                                                <h5 class="time">3 minutes ago</h5>
+                                            </div>
+                                            <p>I think I might you this for one of my projects.</p>
+                                        </div>
+                                    </li>
+                                    <li class="comment">
+                                        <a class="pull-left" href="javascript:void(0);">
+                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">John Doe</h4>
+                                                <h5 class="time">10 seconds ago</h5>
+                                            </div>
+                                            <p>Wow! This is gorgeous.</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="panel panel-white post">
+                            <div class="post-heading">
+                                <div class="pull-left image">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle avatar" alt="user profile image">
+                                </div>
+                                <div class="pull-left meta">
+                                    <div class="title h5">
+                                        <a href="#"><b>John Doe</b></a>
+                                        made a post.
+                                    </div>
+                                    <h6 class="text-muted time">1 minute ago</h6>
+                                </div>
+                            </div>
+                            <div class="post-description">
+                                <p>Anyone who is interested in helping out with the Mark &amp; Markson dinner party, please let me know before the week is over.</p>
+                                <div class="stats">
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-thumbs-up icon"></i>2
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-thumbs-down icon"></i>228
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-share icon"></i>12
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="post-footer">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Add a comment" type="text">
+                                    <span class="input-group-addon">
+                                        <a href="javascript:void(0);"><i class="fa fa-edit"></i></a>
+                                    </span>
+                                </div>
+                                <ul class="comments-list">
+                                    <li class="comment">
+                                        <a class="pull-left" href="javascript:void(0);">
+                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
+                                        </a>
+                                        <div class="comment-body">
+                                            <div class="comment-heading">
+                                                <h4 class="user">Gavino Free</h4>
+                                                <h5 class="time">5 minutes ago</h5>
+                                            </div>
+                                            <p>Sure, I'd help out.</p>
+                                        </div>
+                                        <ul class="comments-list">
+                                            <li class="comment">
+                                                <a class="pull-left" href="javascript:void(0);">
+                                                    <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="avatar">
+                                                </a>
+                                                <div class="comment-body">
+                                                    <div class="comment-heading">
+                                                        <h4 class="user">John Doe</h4>
+                                                        <h5 class="time">3 minutes ago</h5>
+                                                    </div>
+                                                    <p>I will email you the details.</p>
+                                                </div>
+                                            </li>
+                                            <li class="comment">
+                                                <a class="pull-left" href="javascript:void(0);">
+                                                    <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="avatar">
+                                                </a>
+                                                <div class="comment-body">
+                                                    <div class="comment-heading">
+                                                        <h4 class="user">John Doe</h4>
+                                                        <h5 class="time">3 minutes ago</h5>
+                                                    </div>
+                                                    <p>Ok, cool.</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12">
+                        <div class="panel panel-white post">
+                            <div class="post-heading">
+                                <div class="pull-left image">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-circle avatar" alt="user profile image">
+                                </div>
+                                <div class="pull-left meta">
+                                    <div class="title h5">
+                                        <a href="#"><b>John Doe</b></a>
+                                        shared a video.
+                                    </div>
+                                    <h6 class="text-muted time">1 minute ago</h6>
+                                </div>
+                            </div>
+                            <div class="post-video">
+                                <div class="fluid-width-video-wrapper" style="padding-top: 56.2%;"><iframe src="https://player.vimeo.com/video/98417189" id="fitvid369523"></iframe></div>
+                            </div>
+                            <div class="post-description">
+                                <div class="stats">
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-thumbs-up icon"></i>2
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-thumbs-down icon"></i>228
+                                    </a>
+                                    <a href="javascript:void(0);" class="btn btn-default stat-item">
+                                        <i class="fa fa-share icon"></i>12
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="post-footer">
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Add a comment" type="text">
+                                    <span class="input-group-addon">
+                                        <a href="javascript:void(0);"><i class="fa fa-edit"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

@@ -8,7 +8,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
     <title>@ViewBag.Title - ASP.NET Uygulamam</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -20,48 +22,72 @@
             user = UserDAL.Methods.FindX(SessionPersister.Email);
         }
     }
+
+    @RenderSection("styles",false) 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Uygulama adı", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Giriş Sayfası", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Hakkında", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kişi", "Contact", "Home")</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
+
+    <div class="container body-content">
+
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Link</a>
+                    </li>
+
                     @if (isAuth)
                     {
                         @*<li><a class="btn btn-warning" href="/User/Details/@user.ID">@user.Email</a></li>*@
-                        <li>@Html.ActionLink("İstek Listesi", "FriendList", "User")</li>
-                        <li>@Html.ActionLink(@user.Name + " " + @user.Surname, "Details", "User", new { id = user.ID }, new { @class = "btn btn-success " })</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-danger" })</li>
+                        <li class="nav-item">@Html.ActionLink("İstek Listesi", "FriendList", "User",null,htmlAttributes:new { @class="nav-link"})</li>
+                        <li class="nav-item">@Html.ActionLink(@user.Name + " " + @user.Surname, "Details", "User", new { id = user.ID }, new { @class = "btn btn-success " })</li>
+                        <li class="nav-item">@Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-danger" })</li>
                     }
                     @if (isAuth == false)
                     {
-                        <li>@Html.ActionLink("LOGIN", "Login", "Login", null, new { @class = "btn btn-success " })</li>
+                        <li class="nav-item">@Html.ActionLink("LOGIN", "Login", "Login", null, new { @class = "btn btn-success " })</li>
                     }
-
                 </ul>
-                <form class="d-flex" action="/Post/Index" method="post">
-                    @Html.AntiForgeryToken()
-                    <input name="searchterm" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
+        </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="row">
+            @RenderBody()
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - ASP.NET Uygulamam</p>
@@ -70,6 +96,11 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+   @* <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>*@
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>*@
     @RenderSection("scripts", required: false)
+
 </body>
 </html>
