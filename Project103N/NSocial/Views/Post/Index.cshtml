@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string postImageBase = "/UploadedFiles/Post/PostPhoto/";
+
 }
 
 <!DOCTYPE html>
@@ -66,6 +68,16 @@
             @Html.DisplayFor(modelItem => item.Comments)
         </td>
         <td>
+<<<<<<< Updated upstream
+=======
+            @Html.DisplayFor(modelItem => item.PostImagePath)
+        </td>
+        <td>
+            @{ string imgpath = postImageBase + "/" + @item.PostImagePath; }
+            <img src="@imgpath" />
+        </td>
+        <td>
+>>>>>>> Stashed changes
             @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-success" }) |
             @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-light" }) |
             @Html.ActionLink(linkText: "Delete", actionName: "Delete", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" })

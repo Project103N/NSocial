@@ -35,7 +35,11 @@ namespace NSocial.Controllers
             List<Post> searchedStudents = PostDAL.Methods.Search(searchterm);
             return View(searchedStudents);
         }
-
+        public ActionResult Profile(int id)
+        {
+           
+            return View(PostDAL.Methods.GetByUserID(id));
+        }
 
         public ActionResult Add()
         {

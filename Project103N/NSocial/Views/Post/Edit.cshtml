@@ -7,7 +7,11 @@
 
 <h2>Edit</h2>
 
+<<<<<<< Updated upstream
 @using (Html.BeginForm())
+=======
+@using (Html.BeginForm(method: FormMethod.Post, controllerName: "Post", actionName: "Edit", htmlAttributes: new { @enctype = "multipart/form-data" }))
+>>>>>>> Stashed changes
 {
     @Html.AntiForgeryToken()
     

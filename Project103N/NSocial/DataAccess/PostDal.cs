@@ -113,6 +113,20 @@ namespace NSocial.DataAccess
                 throw;
             }
         }
+        public List<Post> GetByUserID(int id)
+        {
+            string query = $"SELECT * FROM Post WHERE UserID=@userid;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@userid", id);
+            try
+            {
+                return GetPostList(cmd);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
         public List<Post> Search(string searchterm)
         {
             string query = $"SELECT * FROM Post WHERE Text LIKE '%' + @searchterm + '%';";

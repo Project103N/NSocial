@@ -30,6 +30,11 @@ namespace NSocial.Controllers
         {
             return View(UserDAL.Methods.Find(id));
         }
+        public ActionResult Profile(int id)
+        {
+
+            return View(PostDAL.Methods.GetByUserID(id));
+        }
 
         // GET: User/Create
         public ActionResult Register()
