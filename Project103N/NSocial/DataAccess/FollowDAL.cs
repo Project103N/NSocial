@@ -92,115 +92,98 @@ namespace NSocial.DataAccess
                 SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
                 return DbTools.Connection.Execute(cmd); // Kabul etmişse true etmemmişse false dönderecek.
             }
-            catch (Exception )
+            catch (Exception)
             {
                 throw;
             }
             // Arkadaşlığı kabul edince IsAccepted ı true yapma
-        } public void FriendRequestAccepted(int id)
+        }
+        public void FriendRequestAccepted(int id)
+        {
+            try
             {
-                try
-                {
-                    string query = $@"UPDATE [dbo].[User] SET [IsAccepted]=True WHERE [FollowerID]=@followerid and [FollowedD] =@followedid;";
-                    //update[User] set [FollowersCount] = 1 where ID = 3;
-                    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-                    cmd.Parameters.AddWithValue("@followerid", SessionPersister.ID);
-                    cmd.Parameters.AddWithValue("@followedid", id);
+                string query = $@"UPDATE [Follow] SET IsAccepted=1 WHERE FollowerID=@followerid and FollowedID =@followedid;";
+                //update[User] set [FollowersCount] = 1 where ID = 3;
+                SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+                cmd.Parameters.AddWithValue("@followerid", id);
+                cmd.Parameters.AddWithValue("@followedid", SessionPersister.ID);
 
-                    DbTools.Connection.Execute(cmd);
-                }
-                catch (Exception e)
-                {
+                DbTools.Connection.Execute(cmd);
+            }
+            catch (Exception e)
+            {
 
-                    throw e;
-                }
-
+                throw e;
             }
 
+        }
 
-            //Ben kaç kişiyi takip ediyorum ve
-            // Arkadaş eklediyse toplam arkadaşı user tablosuna yazma
-            public void AddFollower()
+
+        //Ben kaç kişiyi takip ediyorum ve
+        // Arkadaş eklediyse toplam arkadaşı user tablosuna yazma
+        public void AddFollower()
+        {
+            try
             {
-                try
-                {
-                    string query = $"SELECT COUNT(*) as count from [Follow] where FollowerID={SessionPersister.ID} and IsAccepted=1;";
-                    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-                    int count = Count(cmd);
-                    FollowerCountAdd(count);
-                }
-                catch (Exception e)
-                {
-
-                    throw e;
-                }
-
+                string query = $"SELECT COUNT(*) as count from [Follow] where FollowerID={SessionPersister.ID} and IsAccepted=1;";
+                SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+                int count = Count(cmd);
+                FollowerCountAdd(count);
             }
-            /// Kaç kişi bizi takip ediyor
-            /// Arkadaş eklediyse toplam arkadaşı user tablosuna yazma
-            public void AddFollowing()
+            catch (Exception e)
             {
-                try
-                {
-                    string query = $"SELECT COUNT(*) as count from [Follow] where FollowedID={SessionPersister.ID} and IsAccepted=1;";
-                    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-                    int count = Count(cmd);
-                    FollowingsCountAdd(count);
-                }
-                catch (Exception e)
-                {
 
-                    throw e;
-                }
-
+                throw e;
             }
 
-            public int Count(SqlCommand cmd)
+        }
+        /// Kaç kişi bizi takip ediyor
+        /// Arkadaş eklediyse toplam arkadaşı user tablosuna yazma
+        public void AddFollowing()
+        {
+            try
             {
-                try
-                {
-                    DbTools.Connection.ConnectDB();
-                    int count = -1;
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        count = Convert.ToInt32(reader["count"]);
-                    }
-                    reader.Close();
-                    DbTools.Connection.DisconnectDB();
-                    return count;
-                }
-                catch (Exception e)
-                {
-
-                    throw e;
-                }
-
+                string query = $"SELECT COUNT(*) as count from [Follow] where FollowedID={SessionPersister.ID} and IsAccepted=1;";
+                SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+                int count = Count(cmd);
+                FollowingsCountAdd(count);
             }
-            //User tablosuna toplam followercount sayısını yazma
-            public void FollowerCountAdd(int count)
+            catch (Exception e)
             {
-                try
-                {
-                    string query = $@"UPDATE [dbo].[User] SET [FollowersCount]=@followerscount WHERE [ID]=@id;";
-                    //update[User] set [FollowersCount] = 1 where ID = 3;
-                    SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-                    cmd.Parameters.AddWithValue("@followerscount", count);
-                    cmd.Parameters.AddWithValue("@id", SessionPersister.ID);
 
-                    DbTools.Connection.Execute(cmd);
-                }
-                catch (Exception e)
-                {
-
-                    throw e;
-                }
-
+                throw e;
             }
-            // followingscount  e yazma
-            public void FollowingsCountAdd(int count)
+
+        }
+
+        public int Count(SqlCommand cmd)
+        {
+            try
             {
-                string query = $@"UPDATE [dbo].[User] SET [FollowingsCount]=@followerscount WHERE [ID]=@id;";
+                DbTools.Connection.ConnectDB();
+                int count = -1;
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    count = Convert.ToInt32(reader["count"]);
+                }
+                reader.Close();
+                DbTools.Connection.DisconnectDB();
+                return count;
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+
+        }
+        //User tablosuna toplam followercount sayısını yazma
+        public void FollowerCountAdd(int count)
+        {
+            try
+            {
+                string query = $@"UPDATE [dbo].[User] SET [FollowersCount]=@followerscount WHERE [ID]=@id;";
                 //update[User] set [FollowersCount] = 1 where ID = 3;
                 SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
                 cmd.Parameters.AddWithValue("@followerscount", count);
@@ -208,78 +191,123 @@ namespace NSocial.DataAccess
 
                 DbTools.Connection.Execute(cmd);
             }
-
-            //Takip ettigim kişilerin id sini dönderir
-            public List<User> ShowMyFollowings()
+            catch (Exception e)
             {
 
-                string query = $"SELECT FollowedID FROM [Follow] WHERE FollowerID={SessionPersister.ID} and IsAccepted = 1;";
-                SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-                return GetFollowingsList(cmd);
-            }
-            //Beni takip eden kişilerin id sini dönderir
-
-            public List<User> ShowMyFollower()
-            {
-                string query = $"SELECT FollowerID FROM [Follow] WHERE FollowedID={SessionPersister.ID} and IsAccepted = 1;";
-                SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
-                return GetFollowerList(cmd);
+                throw e;
             }
 
-            public List<User> GetFollowingsList(SqlCommand cmd)
+        }
+        // followingscount  e yazma
+        public void FollowingsCountAdd(int count)
+        {
+            string query = $@"UPDATE [dbo].[User] SET [FollowingsCount]=@followerscount WHERE [ID]=@id;";
+            //update[User] set [FollowersCount] = 1 where ID = 3;
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@followerscount", count);
+            cmd.Parameters.AddWithValue("@id", SessionPersister.ID);
+
+            DbTools.Connection.Execute(cmd);
+        }
+
+        //Takip ettigim kişilerin id sini dönderir
+        public List<User> ShowMyFollowings()
+        {
+
+            string query = $"SELECT FollowedID FROM [Follow] WHERE FollowerID={SessionPersister.ID} and IsAccepted = 1;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            return GetRequestList(cmd);
+        }
+        //Beni takip eden kişilerin id sini dönderir
+
+        public List<User> ShowMyFollower()
+        {
+            string query = $"SELECT FollowerID FROM [Follow] WHERE FollowedID={SessionPersister.ID} and IsAccepted = 1;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            return GetRequestList(cmd);
+        }
+        public User GetByID(int id)
+        {
+            string query = $"SELECT * FROM [User] WHERE ID='{id}';";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            try
             {
-                List<User> FollowingsList = new List<User>();
-                IDataReader reader;
-                DbTools.Connection.ConnectDB();
-                try
-                {
-                    reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        User user = new User();
-                        user.ID = reader.GetInt32(0);
-                        FollowingsList.Add(user);
-                    }
-                    reader.Close();
-                    DbTools.Connection.DisconnectDB();
-                }
-                catch (Exception e)
-                {
-                    DbTools.Connection.DisconnectDB();
-
-                    throw (e);
-                }
-
-                return FollowingsList;
+                return GetRequestList(cmd)[0];
             }
-
-            public List<User> GetFollowerList(SqlCommand cmd)
+            catch (Exception)
             {
-                List<User> FollowerList = new List<User>();
-                IDataReader reader;
-                DbTools.Connection.ConnectDB();
-                try
-                {
-                    reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        User user = new User();
-                        user.ID = reader.GetInt32(0);
-                        FollowerList.Add(user);
-                    }
-                    reader.Close();
-                    DbTools.Connection.DisconnectDB();
-                }
-                catch (Exception e)
-                {
-                    DbTools.Connection.DisconnectDB();
-
-                    throw (e);
-                }
-
-                return FollowerList;
+                return new User();
             }
         }
+
+        public List<User> GetRequestList(SqlCommand cmd)
+        {
+            List<User> FollowingsList = new List<User>();
+            IDataReader reader;
+            DbTools.Connection.ConnectDB();
+            try
+            {
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    FollowingsList.Add(
+                        new User() { ID = reader.GetInt32(0), Name = reader["Name"].ToString(), Surname = reader["Surname"].ToString() });
+
+                }
+                reader.Close();
+                DbTools.Connection.DisconnectDB();
+            }
+            catch (Exception e)
+            {
+                DbTools.Connection.DisconnectDB();
+
+                throw (e);
+            }
+
+            return FollowingsList;
+        }
+        public List<User> GetRequestID(SqlCommand cmd)
+        {
+            List<User> FollowingsList = new List<User>();
+            IDataReader reader;
+            DbTools.Connection.ConnectDB();
+            try
+            {
+                reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    FollowingsList.Add(
+                        new User() { ID = reader.GetInt32(0) });
+
+                }
+                reader.Close();
+                DbTools.Connection.DisconnectDB();
+            }
+            catch (Exception e)
+            {
+                DbTools.Connection.DisconnectDB();
+
+                throw (e);
+            }
+
+            return FollowingsList;
+        }
+
+        public List<User> WaitingRequestsList()
+        {
+            try
+            {
+                string query = $"SELECT FollowerID from [Follow] where FollowedID ='{SessionPersister.ID}' and IsAccepted = 0;";
+                SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+                return GetRequestID(cmd);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
     }
+}
