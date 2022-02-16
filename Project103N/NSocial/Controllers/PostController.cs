@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace NSocial.Controllers
 {
+    //[CustomAuthorize (Roles ="user,superadmin")]
     public class PostController : Controller
     {
         // GET: Post
@@ -26,7 +27,6 @@ namespace NSocial.Controllers
         public ActionResult Index()
         {
             List<Post> posts = PostDAL.Methods.List();
-
             return View(posts);
         }
         [HttpPost]

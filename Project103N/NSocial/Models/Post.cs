@@ -25,8 +25,22 @@ namespace NSocial.Models
 
 		//yapılması gerekenler:
 		//comment kısmı icollection ile düzeltilicek, user id ye göre bir kişinin birden fazla yorumu olabilir.(mantık değişmeli)
+
 		//fotoğraf eklenicek ve foto kısmı detail add edit,search ve remove ile entegre olucak
 		//punch kısmı database ve diğer alanlara eklenicek
 		//authorization ve login eklentileri yapılacak
+
+		//yorum saydırılacak
+
+		private List<Comments> _PostComments { get; set; }
+		public List<Comments> PostComments
+        {
+			get 
+			{
+				return CommentsDAL.Methods.GetByPostID(this.ID);
+			}
+        }
+		
+
 	}
 }
