@@ -8,7 +8,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
+
     <title>@ViewBag.Title - ASP.NET Uygulamam</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -20,6 +20,36 @@
             user = UserDAL.Methods.FindX(SessionPersister.Email);
         }
     }
+    <style>
+        body {
+            margin: 40px;
+        }
+
+        button {
+            cursor: pointer;
+            outline: 0;
+            color: #AAA;
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
+
+        btn:hover,
+        btn:focus,
+        btn.focus {
+            color: unset !important;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -71,5 +101,126 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            var likebutton = document.querySelector('#likebutton');
+            var dislikebutton = document.querySelector('#dislikebutton');
+
+            likebutton.addEventListener('click', function () {
+                var likes = document.getElementById("likes");
+                var dislikes = document.getElementById('dislikes');
+                var likeCount = 0;
+                var dislikeCount = 0
+
+                if (dislikebutton.classList.contains('red')) {
+                    dislikebutton.classList.remove('red');
+                    var dislikeCount = Dislike(-1);
+                    dislikes.innerHTML = dislikeCount;
+                    $("#dislikebutton").css('color','#AAA');
+                }
+
+                // daha önceden green eklenmişse adam vazgeçmek için tıklıyordur.
+                if (likebutton.classList.contains('green')) {
+                    like = Like(-1); // like sayısı 1 eksilir.
+                    $(this).css('color', '#AAA');
+                }
+                else {
+                    likeCount = Like(1);
+                    $("#likebutton").css('color', 'green');
+                }
+
+                this.classList.toggle('green');
+                //console.log(likeCount);
+                likes.innerHTML = String(likeCount);
+            });
+
+
+
+            dislikebutton.addEventListener('click', function () {
+                var likes = document.getElementById("likes"); 
+                var dislikes = document.getElementById('dislikes');
+                var likeCount = 0; 
+                var dislikeCount = 0
+
+                if (likebutton.classList.contains('green'))
+                {
+                    likebutton.classList.remove('green');
+                    var likeCount = Like(-1);
+                    likes.innerHTML = String(likeCount);
+                    $("#likebutton").css('color', '#AAA');
+                }
+
+                if (dislikebutton.classList.contains("red")) {
+                    dislikeCount = Dislike(-1);
+                    $(this).css('color', '#AAA');
+                }
+                else {
+                    dislikeCount = Dislike(1);
+                    $("#dislikebutton").css('color', 'red');
+                }
+                dislikes.innerHTML = dislikeCount;
+
+                this.classList.toggle('red');
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+            function Like(count) {
+                var post_url = "/Reaction/Like";
+                var datam = {
+                    value: count
+                };
+                var likes = 0;
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: post_url,
+                    data: datam,
+                    dataType: "json",
+                    encode: true,
+                    success: function (likeCount) {
+                        likes = likeCount;
+                        //console.log(likeCount)
+                        //console.log(likes)
+                    }
+                });
+                //event.preventDefault();
+                return likes;
+            };
+            function Dislike(count) {
+                var post_url = "/Reaction/Dislike";
+                var datam = {
+                    value: count
+                };
+                var dislikeCounttt = 0;
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: post_url,
+                    data: datam,
+                    dataType: "json",
+                    encode: true,
+                    success: function (dislikeCount) {
+                        dislikeCounttt = dislikeCount;
+                        //console.log(likeCount)
+                        //console.log(likes)
+                    }
+                });
+                //event.preventDefault();
+                return dislikeCounttt;
+            };
+        });
+    </script>
 </body>
 </html>

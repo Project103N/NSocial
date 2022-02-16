@@ -199,6 +199,7 @@
     <Content Include="Views\User\FriendList.cshtml" />
     <Content Include="Views\Reaction\Dislike.cshtml" />
     <Content Include="Views\Reaction\Like.cshtml" />
+    <Content Include="Views\Shared\_partial_like_dislike.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

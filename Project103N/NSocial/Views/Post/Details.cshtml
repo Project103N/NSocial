@@ -1,17 +1,10 @@
 ﻿@model NSocial.Models.Post
 
 @{
-    Layout = null;
 }
 
 <!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
     <div>
         <h4>Post</h4>
         <hr />
@@ -56,11 +49,14 @@
                 @Html.DisplayFor(model => model.Comments)
             </dd>
 
+
+
+            <dd>
+                @Html.Partial("_partial_like_dislike")
+            </dd>
         </dl>
     </div>
     <p>
         @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
         @Html.ActionLink("Back to List", "Index")
     </p>
-</body>
-</html>
