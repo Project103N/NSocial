@@ -4,17 +4,10 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string postImageBase = "/UploadedFiles/Post/PostPhoto/";
-
 }
 
-<!DOCTYPE html>
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
+
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -65,11 +58,17 @@
             @Html.DisplayFor(modelItem => item.UserID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Comments)
+            @foreach (var comment in item.PostComments)
+            {
+                <a class="alert alert-info">
+                    @comment.Text
+                </a>
+                <br />
+            }
+
+
         </td>
         <td>
-<<<<<<< Updated upstream
-=======
             @Html.DisplayFor(modelItem => item.PostImagePath)
         </td>
         <td>
@@ -77,14 +76,12 @@
             <img src="@imgpath" />
         </td>
         <td>
->>>>>>> Stashed changes
             @Html.ActionLink(linkText: "Edit", actionName: "Edit", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-success" }) |
             @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-light" }) |
-            @Html.ActionLink(linkText: "Delete", actionName: "Delete", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" })
+            @Html.ActionLink(linkText: "Delete", actionName: "Delete", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" }) |
+            @Html.ActionLink(linkText: "Comment", actionName: "Add", controllerName: "Comments", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" }) |
         </td>
     </tr>
     }
     
     </table>
-</body>
-</html>

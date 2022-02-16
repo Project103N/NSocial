@@ -57,13 +57,17 @@
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
             @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-<<<<<<< Updated upstream
+
             @Html.ActionLink("Delete", "Delete", new { id = item.ID }) |
             @Html.ActionLink("Follow", "Follow", new { id = item.ID })
-=======
+
             @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+
             @Html.ActionLink(linkText: "Post", actionName: "Profile", controllerName: "User", routeValues: new { id = item.ID }, htmlAttributes: new { })
->>>>>>> Stashed changes
+
+
+            @Html.ActionLink(linkText: "Post", actionName: "Index", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { })
+
         </td>
     </tr>
 }
