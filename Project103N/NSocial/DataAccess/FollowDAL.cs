@@ -309,5 +309,13 @@ namespace NSocial.DataAccess
             }
 
         }
+
+        public void DeleteFromFollowTable(int id)
+        {
+            string query = $"DELETE FROM Follow WHERE FollowerID={id} AND FollowedID={SessionPersister.ID} AND IsAccepted=0";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            DbTools.Connection.Delete(cmd);
+
+        }
     }
 }

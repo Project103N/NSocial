@@ -188,8 +188,8 @@ namespace NSocial.Controllers
             try
             {
                 FollowDAL.Methods.FriendRequest(user.ID);
-               
-  
+
+
                 return RedirectToAction("Index");
             }
             catch
@@ -197,13 +197,13 @@ namespace NSocial.Controllers
                 return View();
             }
 
-            
+
         }
 
         public ActionResult FriendList()
         {
             List<User> NewUser = new List<User>();
-            List<User> List= FollowDAL.Methods.WaitingRequestsList();
+            List<User> List = FollowDAL.Methods.WaitingRequestsList();
             foreach (var item in List)
             {
                 NewUser.Add(FollowDAL.Methods.GetByID(item.ID));
@@ -214,7 +214,7 @@ namespace NSocial.Controllers
         public ActionResult ToSeeFollowingList()
         {
             List<User> NewUser = new List<User>();
-            List<User> List= FollowDAL.Methods.ShowMyFollowings();
+            List<User> List = FollowDAL.Methods.ShowMyFollowings();
             foreach (var item in List)
             {
                 NewUser.Add(FollowDAL.Methods.GetByID(item.ID));
@@ -231,6 +231,12 @@ namespace NSocial.Controllers
                 NewUser.Add(FollowDAL.Methods.GetByID(item.ID));
             }
             return View(NewUser);
+        }
+
+        public ActionResult UnFollow(int id)
+        {
+            FollowDAL.Methods.DeleteFromFollowTable(id);
+            return RedirectToAction("FriendList");
         }
 
     }
