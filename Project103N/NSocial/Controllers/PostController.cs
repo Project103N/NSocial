@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace NSocial.Controllers
 {
-    //[CustomAuthorize (Roles ="user,superadmin")]
+    [CustomAuthorize (Roles ="user,superadmin")]
     public class PostController : Controller
     {
         // GET: Post
