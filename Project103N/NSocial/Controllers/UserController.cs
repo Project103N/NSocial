@@ -213,6 +213,9 @@ namespace NSocial.Controllers
             }
             return View(NewUser);
         }
+
+        public ActionResult FriendList2()
+        { 
             //FollowDAL.Methods.FriendRequest(id);
             int sayi1 = FollowDAL.Methods.GetFollowing(SessionPersister.ID);
             int sayi2 = FollowDAL.Methods.GetFollower(SessionPersister.ID);

@@ -47,6 +47,7 @@ namespace NSocial.DataAccess
                         Text = reader["Text"].ToString(),
                         PostDate = (DateTime)reader["PostDate"],
                         LikesCount = int.Parse(reader["LikesCount"].ToString()),
+                        DislikesCount = int.Parse(reader["DislikesCount"].ToString()),
                         CommentsCount = int.Parse(reader["CommentsCount"].ToString()),
                         UserID = int.Parse(reader["UserID"].ToString()),
                         Comments = reader["Comments"].ToString()
@@ -65,11 +66,12 @@ namespace NSocial.DataAccess
 
         public int Add(Post Post)
         {
-            string query = $@"INSERT INTO [dbo].[Post] ([Text],[PostDate],[LikesCount],[CommentsCount],[UserID],[Comments]) VALUES (@text, @postDate, @likesCount, @commentsCount,@userId,@comments);";
+            string query = $@"INSERT INTO [dbo].[Post] ([Text],[PostDate],[LikesCount],[DislikesCount],[CommentsCount],[UserID],[Comments]) VALUES (@text, @postDate, @likesCount,@dislikesCount, @commentsCount,@userId,@comments);";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@text", Post.Text);
             cmd.Parameters.AddWithValue("@postDate", Post.PostDate);
-            cmd.Parameters.AddWithValue("@likesCount", Post.LikesCount);
+            cmd.Parameters.AddWithValue("@likesCount", 0);
+            cmd.Parameters.AddWithValue("@dislikesCount", 0);
             cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
             cmd.Parameters.AddWithValue("@userId", Post.UserID);
             cmd.Parameters.AddWithValue("@comments", Post.Comments);
@@ -142,5 +144,37 @@ namespace NSocial.DataAccess
             }
         }
         //models/post.cs kisminda yoruma aldiklarimizi yorumdan kaldirip data, controller, view kismi hafif duzenlemeler olacak
+
+        public int GetLikeCount(int id)
+        {
+            string query = "SELECT LikesCount FROM Post WHERE ID=@postid;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@postid", id);
+            return DbTools.Connection.Create(cmd);
+
+        }
+        public int GetDislikeCount(int id)
+        {
+            string query = "SELECT DislikesCount FROM Post WHERE ID=@postid;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@postid", id);
+            return DbTools.Connection.Create(cmd);
+        }
+        public bool AddLike(int count,int postid) // 1 veya -1 alabilir.
+        {
+            string query = "UPDATE Post SET [LikesCount] +=@count WHERE ID = @postid;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@count", count);
+            cmd.Parameters.AddWithValue("@postid", postid);
+            return DbTools.Connection.Execute(cmd);
+        }
+        public bool AddDislike(int count, int postid) // 1 veya -1 alabilir.
+        {
+            string query = "UPDATE Post SET [DislikesCount] +=@count WHERE ID = @postid;";
+            SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
+            cmd.Parameters.AddWithValue("@count", count);
+            cmd.Parameters.AddWithValue("@postid", postid);
+            return DbTools.Connection.Execute(cmd);
+        }
     }
 }
