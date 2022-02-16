@@ -37,7 +37,8 @@
             <th></th>
         </tr>
     
-    @foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.ID)
@@ -80,6 +81,10 @@
             @Html.ActionLink(linkText: "Details", actionName: "Details", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-light" }) |
             @Html.ActionLink(linkText: "Delete", actionName: "Delete", controllerName: "Post", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" }) |
             @Html.ActionLink(linkText: "Comment", actionName: "Add", controllerName: "Comments", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" }) |
+        </td>
+        <td>
+            @{ ViewBag.postid = item.ID; }
+            @Html.Partial("_partial_like_dislike")
         </td>
     </tr>
     }

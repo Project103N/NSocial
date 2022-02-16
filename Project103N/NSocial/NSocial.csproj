@@ -211,6 +211,7 @@
     <Content Include="Views\Comments\Add.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Shared\_partial_like_dislike.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

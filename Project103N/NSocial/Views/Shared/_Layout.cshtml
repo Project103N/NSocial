@@ -23,7 +23,37 @@
         }
     }
 
-    @RenderSection("styles",false) 
+    @RenderSection("styles", false)
+    <style>
+        body {
+            margin: 40px;
+        }
+
+        button {
+            cursor: pointer;
+            outline: 0;
+            color: #AAA;
+        }
+
+        .btn:focus {
+            outline: none;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .red {
+            color: red;
+        }
+
+        btn:hover,
+        btn:focus,
+        btn.focus {
+            color: unset !important;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
@@ -48,7 +78,7 @@
                     @if (isAuth)
                     {
                         @*<li><a class="btn btn-warning" href="/User/Details/@user.ID">@user.Email</a></li>*@
-                        <li class="nav-item">@Html.ActionLink("İstek Listesi", "FriendList", "User",null,htmlAttributes:new { @class="nav-link"})</li>
+                        <li class="nav-item">@Html.ActionLink("İstek Listesi", "FriendList", "User", null, htmlAttributes: new { @class = "nav-link" })</li>
                         <li class="nav-item">@Html.ActionLink(@user.Name + " " + @user.Surname, "Details", "User", new { id = user.ID }, new { @class = "btn btn-success " })</li>
                         <li class="nav-item">@Html.ActionLink("Logout", "Logout", "Login", null, new { @class = "btn btn-danger" })</li>
                     }
@@ -96,11 +126,144 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-   @* <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>*@
+    @* <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>*@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>*@
     @RenderSection("scripts", required: false)
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+                $(document).ready(() => {
+
+            var likebuttons = document.querySelector('.likebutton');
+            var dislikebuttons = document.querySelector('.dislikebutton');
+
+            $(".likebutton").on('click', function (event) {
+                var postid = $(this).data("postid");
+                console.log("POSTID:" + postid);
+                var likesstr = "likes-" + String(postid);
+                var dislikesstr = "dislikes-" + String(postid);
+
+                var likes = document.getElementById(likesstr);
+                var dislikes = document.getElementById(dislikesstr);
+
+                var likeCount = 0;
+                var dislikeCount = 0;
+
+                var dislikebuttonstr = "btn-dislike-" + String(postid);
+                var dislikebutton = document.getElementById(dislikebuttonstr);
+
+                var likebuttonstr = "btn-like-" + String(postid);
+                var likebutton = document.getElementById(likebuttonstr);
+
+                if (dislikebutton.classList.contains('red')) {
+                    dislikebutton.classList.remove('red');
+                    var dislikeCount = Dislike(-1);
+                    dislikes.innerHTML = dislikeCount;
+                    dislikebutton.css('color', '#AAA');
+                }
+                // daha önceden green eklenmişse adam vazgeçmek için tıklıyordur.
+                if (likebutton.classList.contains('green')) {
+                    like = Like(-1); // like sayısı 1 eksilir.
+                    this.css('color', '#AAA'); //TODO: Düzeltilecek!!!!!
+                else {
+                    likeCount = Like(1);
+                    this.css('color', 'green');
+                }
+                this.classList.toggle('green');
+                //console.log(likeCount);
+                likes.innerHTML = String(likeCount);
+            });
+            $(".dislikebutton").on('click', function (event) {
+                var postid = $(this).data("postid");
+                console.log("POSTID:" + postid);
+                var likesstr = "likes-" + String(postid);
+                var dislikesstr = "dislikes-" + String(postid);
+
+                var likes = document.getElementById(likesstr);
+                var dislikes = document.getElementById(dislikesstr);
+
+                var likeCount = 0;
+                var dislikeCount = 0;
+
+                var likebuttonstr = "#btn-like-" + String(postid);
+                //console.log(dislikebuttonstr);
+
+                var dislikebutton = $(dislikebuttonstr);
+
+
+
+
+
+
+
+
+
+
+                if ($(this).classList.contains('green')) {
+                    $(this).classList.remove('green');
+                    var likeCount = Like(-1);
+                    likes.innerHTML = String(likeCount);
+                    $("#likebutton").css('color', '#AAA');
+                }
+                if (dislikebutton.classList.contains("red")) {
+                    dislikeCount = Dislike(-1);
+                    $(this).css('color', '#AAA');
+                }
+                else {
+                    dislikeCount = Dislike(1);
+                    dislikebutton.css('color', 'red');
+                }
+                dislikes.innerHTML = dislikeCount;
+                this.classList.toggle('red');
+            });
+            function Like(count) {
+                var post_url = "/Reaction/Like";
+                var datam = {
+                    value: count
+                };
+                var likes = 0;
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: post_url,
+                    data: datam,
+                    dataType: "json",
+                    encode: true,
+                    success: function (likeCount) {
+                        likes = likeCount;
+                        //console.log(likeCount)
+                        //console.log(likes)
+                    }
+                });
+                //event.preventDefault();
+                return likes;
+            };
+            function Dislike(count) {
+                var post_url = "/Reaction/Dislike";
+                var datam = {
+                    value: count
+                };
+                var dislikeCounttt = 0;
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: post_url,
+                    data: datam,
+                    dataType: "json",
+                    encode: true,
+                    success: function (dislikeCount) {
+                        dislikeCounttt = dislikeCount;
+                        //console.log(likeCount)
+                        //console.log(likes)
+                    }
+                });
+                //event.preventDefault();
+                return dislikeCounttt;
+            };
+        });
+    </script>
 
 </body>
 </html>
