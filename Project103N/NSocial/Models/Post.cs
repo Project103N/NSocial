@@ -12,7 +12,7 @@ namespace NSocial.Models
 	public class Post
 	{
 		public int ID { get; set; }
-		//public HttpPostedFileBase PostImage { get; set; }
+		public HttpPostedFileBase PostImage { get; set; }
 		public string Text { get; set; }
 		public DateTime PostDate { get; set; }
 		public int LikesCount { get; set; }
@@ -21,6 +21,7 @@ namespace NSocial.Models
 		public int UserID { get; set; }
 		//public User RoleID { get; set; }
 		public string Comments { get; set; } //burası icollection olucak 
+		public string PostImagePath { get; set; } = "path";
 
 
 		//yapılması gerekenler:

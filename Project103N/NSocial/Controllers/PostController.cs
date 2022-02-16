@@ -51,8 +51,49 @@ namespace NSocial.Controllers
         public ActionResult Add(Post post)
         {
 
-            TempData["insertedID"] = PostDAL.Methods.Add(post);
+            post.PostDate = DateTime.Now;
+
+            post.PostImagePath = "photo1.jpg";
+            post.LikesCount = 0;
+            post.CommentsCount = 0;
+            post.Comments = "";
+
+            int insertedID = PostDAL.Methods.Add(post);
+            if (insertedID != -1)
+            {
+                post.ID = insertedID;
+                if (post.PostImage != null)
+                {
+                    string path = PhotoUpload(post.ID, post.PostImage);
+                    if (path != "")
+                    {
+                        post.PostImagePath = path;
+                        PostDAL.Methods.Edit(post);
+                        return Content(path);
+                    }
+                }
+            }
             return RedirectToAction("Index");
+        }
+        public string PhotoUpload(int ID, HttpPostedFileBase postPhoto)
+        {
+            string userPath = Server.MapPath($"~/UploadedFiles/Post/PostPhoto/");
+            string shortPath = $"{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/{ID}/";
+            string directory = userPath + shortPath;
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+            shortPath += postPhoto.FileName;
+
+            string photoPath = userPath + shortPath;
+            try
+            {
+                postPhoto.SaveAs(photoPath);
+            }
+            catch (Exception)
+            {
+                shortPath = "";
+            }
+            return shortPath;
         }
         public ActionResult Details(int id)
         {
@@ -69,6 +110,29 @@ namespace NSocial.Controllers
         [HttpPost]
         public ActionResult Edit(Post post)
         {
+            if (post.PostImage != null)
+            {
+                string path = PhotoUpload(post.ID, post.PostImage);
+                if (path != "")
+                {
+                    string oldPhotoPath = Server.MapPath($"~/UploadedFiles/Post/PostPhoto/") + post.PostImagePath;
+                    FileInfo f = new FileInfo(oldPhotoPath);
+                    if (f.Exists)
+                        f.Delete();
+                    post.PostImagePath = path;
+
+                    //eskiyi sil
+                }
+            }
+            try
+            {
+                PostDAL.Methods.Edit(post);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");//return View();
+            }
             int affectedRows = PostDAL.Methods.Edit(post);
             if (affectedRows > 0)
                 TempData["editmessage"] = "Edit successfull!!!";

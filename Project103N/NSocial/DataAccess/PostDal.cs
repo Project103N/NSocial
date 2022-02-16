@@ -50,7 +50,8 @@ namespace NSocial.DataAccess
                         DislikesCount = int.Parse(reader["DislikesCount"].ToString()),
                         CommentsCount = int.Parse(reader["CommentsCount"].ToString()),
                         UserID = int.Parse(reader["UserID"].ToString()),
-                        Comments = reader["Comments"].ToString()
+                        Comments = reader["Comments"].ToString(),
+                        PostImagePath = reader["PostImagePath"].ToString()
                     }) ;
                 }
                 reader.Close();
@@ -66,7 +67,7 @@ namespace NSocial.DataAccess
 
         public int Add(Post Post)
         {
-            string query = $@"INSERT INTO [dbo].[Post] ([Text],[PostDate],[LikesCount],[DislikesCount],[CommentsCount],[UserID],[Comments]) VALUES (@text, @postDate, @likesCount,@dislikesCount, @commentsCount,@userId,@comments);";
+            string query = $@"INSERT INTO [dbo].[Post] ([Text],[PostDate],[LikesCount],[DislikesCount],[CommentsCount],[UserID],[Comments],[PostImagePath]) VALUES (@text, @postDate, @likesCount,@dislikesCount, @commentsCount,@userId,@comments,@postImagePath); SELECT CAST(scope_identity() AS int);";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@text", Post.Text);
             cmd.Parameters.AddWithValue("@postDate", Post.PostDate);
@@ -75,6 +76,7 @@ namespace NSocial.DataAccess
             cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
             cmd.Parameters.AddWithValue("@userId", Post.UserID);
             cmd.Parameters.AddWithValue("@comments", Post.Comments);
+            cmd.Parameters.AddWithValue("@postImagePath", Post.PostImagePath);
             return DbTools.Connection.Create(cmd);
         }
 
@@ -82,11 +84,12 @@ namespace NSocial.DataAccess
 
         public int Edit(Post post)
         {
-            string query = $@"UPDATE [dbo].[Post] SET [Text]=@text WHERE [ID]=@id;";
+            string query = $@"UPDATE [dbo].[Post] SET [Text]=@text, [PostImagePath]=@postImagePath WHERE [ID]=@id;";
             //string query = $@"UPDATE [dbo].[User] SET ([ID],[Text]) VALUES (@id,@text); SELECT CAST(scope_identity() AS int);";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@text", post.Text);
             cmd.Parameters.AddWithValue("@id", post.ID);
+            cmd.Parameters.AddWithValue("@postImagePath", post.PostImagePath);
             return DbTools.Connection.Edit(cmd);
         }
         public int Delete(int id)
