@@ -139,9 +139,10 @@
             var likebuttons = document.querySelector('.likebutton');
             var dislikebuttons = document.querySelector('.dislikebutton');
 
-            $(".likebutton").on('click', function (event) {
+            $(".likebutton").on("click", function (event) {
                 var postid = $(this).data("postid");
                 console.log("POSTID:" + postid);
+
                 var likesstr = "likes-" + String(postid);
                 var dislikesstr = "dislikes-" + String(postid);
 
@@ -161,21 +162,25 @@
                     dislikebutton.classList.remove('red');
                     var dislikeCount = Dislike(-1);
                     dislikes.innerHTML = dislikeCount;
-                    dislikebutton.css('color', '#AAA');
+                    var dislikebuttonstrJ = "#" + dislikebuttonstr;
+                    $(dislikebuttonstrJ).css("color", "#AAA");
                 }
+
                 // daha önceden green eklenmişse adam vazgeçmek için tıklıyordur.
-                if (likebutton.classList.contains('green')) {
+                if (likebutton.classList.contains("green")) 
+                {
+                    //likebutton.classList.remove('green');
                     like = Like(-1); // like sayısı 1 eksilir.
-                    this.css('color', '#AAA'); //TODO: Düzeltilecek!!!!!
-                else {
+                    $(this).css("color", "#AAA");
+                }else{
                     likeCount = Like(1);
-                    this.css('color', 'green');
+                    $(this).css("color", "green");
                 }
-                this.classList.toggle('green');
+                this.classList.toggle("green");
                 //console.log(likeCount);
                 likes.innerHTML = String(likeCount);
             });
-            $(".dislikebutton").on('click', function (event) {
+            $(".dislikebutton").on("click", function (event) {
                 var postid = $(this).data("postid");
                 console.log("POSTID:" + postid);
                 var likesstr = "likes-" + String(postid);
@@ -187,36 +192,31 @@
                 var likeCount = 0;
                 var dislikeCount = 0;
 
-                var likebuttonstr = "#btn-like-" + String(postid);
-                //console.log(dislikebuttonstr);
+                var dislikebuttonstr = "btn-dislike-" + String(postid);
+                var dislikebutton = document.getElementById(dislikebuttonstr);
 
-                var dislikebutton = $(dislikebuttonstr);
-
-
-
+                var likebuttonstr = "btn-like-" + String(postid);
+                var likebutton = document.getElementById(likebuttonstr);
 
 
-
-
-
-
-
-                if ($(this).classList.contains('green')) {
-                    $(this).classList.remove('green');
+                if (likebutton.classList.contains("green")) {
+                    likebuttonstrJ = "#" + likebuttonstr;
+                    likebutton.classList.remove("green");
                     var likeCount = Like(-1);
                     likes.innerHTML = String(likeCount);
-                    $("#likebutton").css('color', '#AAA');
+                    $(likebuttonstrJ).css("color", "#AAA");
                 }
                 if (dislikebutton.classList.contains("red")) {
                     dislikeCount = Dislike(-1);
-                    $(this).css('color', '#AAA');
+                    $(this).css("color", "#AAA");
                 }
                 else {
+                    var dislikebuttonstrJ = "#" + dislikebuttonstr;
                     dislikeCount = Dislike(1);
-                    dislikebutton.css('color', 'red');
+                    $(dislikebuttonstrJ).css("color", "red");
                 }
                 dislikes.innerHTML = dislikeCount;
-                this.classList.toggle('red');
+                this.classList.toggle("red");
             });
             function Like(count) {
                 var post_url = "/Reaction/Like";
