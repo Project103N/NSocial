@@ -205,7 +205,6 @@
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Home\Index - Copy.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
-    <Content Include="Views\Post\Add.cshtml" />
     <Content Include="Views\Post\Profile.cshtml" />
     <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Comments\Add.cshtml" />
