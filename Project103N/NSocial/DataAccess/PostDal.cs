@@ -173,7 +173,7 @@ namespace NSocial.DataAccess
             cmd.Parameters.AddWithValue("@postid", postid);
             return DbTools.Connection.Create(cmd);
         }
-        public bool AddDislike(string value, string postidstr) // 1 veya -1 alabilir.
+        public int AddDislike(string value, string postidstr) // 1 veya -1 alabilir.
         {
             int count = Convert.ToInt32(value);
             int postid = Convert.ToInt32(postidstr);
@@ -181,7 +181,7 @@ namespace NSocial.DataAccess
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@count", count);
             cmd.Parameters.AddWithValue("@postid", postid);
-            return DbTools.Connection.Execute(cmd);
+            return DbTools.Connection.Create(cmd);
         }
     }
 }

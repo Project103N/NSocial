@@ -19,6 +19,22 @@ namespace NSocial.Models
 		public int DislikesCount { get; set; }
 		public int CommentsCount { get; set; }
 		public int UserID { get; set; }
+		private User _User { get; set; }
+		public User User 
+		{ 
+			get
+            {
+				if (_User == null)
+					_User = UserDAL.Methods.FindX(UserID);
+				return _User;
+            }
+            set
+            {
+				this._User = value;
+            }
+
+		}
+
 		//public User RoleID { get; set; }
 		public string Comments { get; set; } //burası icollection olucak 
 		public string PostImagePath { get; set; } = "path";

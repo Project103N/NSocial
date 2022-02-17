@@ -22,7 +22,6 @@ namespace NSocial.Controllers
 
 
 
-
         // GET: Post
         public ActionResult Index()
         {
@@ -165,6 +164,12 @@ namespace NSocial.Controllers
         {
             var likeCount = PostDAL.Methods.AddLike(value, postidstr);
             return likeCount;
+        }
+        [HttpPost]
+        public int Dislike(string value, string postidstr)
+        {
+            var dislikeCount = PostDAL.Methods.AddDislike(value, postidstr);
+            return dislikeCount;
         }
 
     }

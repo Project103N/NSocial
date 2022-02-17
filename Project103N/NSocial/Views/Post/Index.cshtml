@@ -83,7 +83,10 @@
             @Html.ActionLink(linkText: "Comment", actionName: "Add", controllerName: "Comments", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" }) |
         </td>
         <td>
+            @* TODO: Like Dislike eklenmek istenen yerlere eklenecek. *@
             @{ ViewBag.postid = item.ID; }
+            @{ ViewBag.LikesCount = item.LikesCount; }
+            @{ ViewBag.DislikesCount = item.DislikesCount; }
             @Html.Partial("_partial_like_dislike")
         </td>
     </tr>
