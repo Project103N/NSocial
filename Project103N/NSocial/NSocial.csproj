@@ -182,10 +182,8 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout-yedek.cshtml" />
+    <Content Include="Views\Home\Index-yedek.cshtml" />
     <Content Include="Views\User\Register.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
@@ -202,15 +200,17 @@
     <Content Include="Views\User\FriendList.cshtml" />
     <Content Include="Views\Reaction\Dislike.cshtml" />
     <Content Include="Views\Reaction\Like.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
     <Content Include="Views\Home\Index - Copy.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Post\Profile.cshtml" />
-    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\User\Profile-Yedek.cshtml" />
     <Content Include="Views\Comments\Add.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Comments\Details.cshtml" />
     <Content Include="Views\Shared\_partial_like_dislike.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\User\Profile.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

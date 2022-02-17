@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using NSocial.Security;
 
 namespace NSocial.DataAccess
 {
@@ -74,7 +75,7 @@ namespace NSocial.DataAccess
             cmd.Parameters.AddWithValue("@likesCount", 0);
             cmd.Parameters.AddWithValue("@dislikesCount", 0);
             cmd.Parameters.AddWithValue("@commentsCount", Post.CommentsCount);
-            cmd.Parameters.AddWithValue("@userId", Post.UserID);
+            cmd.Parameters.AddWithValue("@userId", SessionPersister.ID);
             cmd.Parameters.AddWithValue("@comments", Post.Comments);
             cmd.Parameters.AddWithValue("@postImagePath", Post.PostImagePath);
             return DbTools.Connection.Create(cmd);

@@ -24,9 +24,7 @@
     }
 
     @RenderSection("styles", false)
-
     <style>
-        /*Like Dislike Css*/
         body {
             margin: 40px;
         }
@@ -89,16 +87,10 @@
                         <li class="nav-item">@Html.ActionLink("LOGIN", "Login", "Login", null, new { @class = "btn btn-success " })</li>
                     }
                 </ul>
-                @*<form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>*@
-                <form class="d-flex" action="/Post/Index" method="post">
-                    @Html.AntiForgeryToken()
-                    <input name="searchterm" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-
             </div>
         </nav>
 
@@ -128,7 +120,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - NSocial</p>
+            <p>&copy; @DateTime.Now.Year -NSocial</p>
         </footer>
     </div>
 
@@ -139,9 +131,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>*@
     @RenderSection("scripts", required: false)
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(() => {
+                $(document).ready(() => {
 
             var likebuttons = document.querySelector('.likebutton');
             var dislikebuttons = document.querySelector('.dislikebutton');
@@ -167,19 +160,20 @@
 
                 if (dislikebutton.classList.contains('red')) {
                     dislikebutton.classList.remove('red');
-                    var dislikeCount = Dislike(-1, postid);
+                    var dislikeCount = Dislike(-1,postid);
                     dislikes.innerHTML = dislikeCount;
                     var dislikebuttonstrJ = "#" + dislikebuttonstr;
                     $(dislikebuttonstrJ).css("color", "#AAA");
                 }
 
                 // daha önceden green eklenmişse adam vazgeçmek için tıklıyordur.
-                if (likebutton.classList.contains("green")) {
+                if (likebutton.classList.contains("green")) 
+                {
                     //likebutton.classList.remove('green');
-                    like = Like(-1, postid); // like sayısı 1 eksilir.
+                    like = Like(-1,postid); // like sayısı 1 eksilir.
                     $(this).css("color", "#AAA");
-                } else {
-                    likeCount = Like(1, postid);
+                }else{
+                    likeCount = Like(1,postid);
                     $(this).css("color", "green");
                 }
                 this.classList.toggle("green");
@@ -208,27 +202,27 @@
                 if (likebutton.classList.contains("green")) {
                     likebuttonstrJ = "#" + likebuttonstr;
                     likebutton.classList.remove("green");
-                    var likeCount = Like(-1, postid);
+                    var likeCount = Like(-1,postid);
                     likes.innerHTML = String(likeCount);
                     $(likebuttonstrJ).css("color", "#AAA");
                 }
                 if (dislikebutton.classList.contains("red")) {
-                    dislikeCount = Dislike(-1, postid);
+                    dislikeCount = Dislike(-1,postid);
                     $(this).css("color", "#AAA");
                 }
                 else {
                     var dislikebuttonstrJ = "#" + dislikebuttonstr;
-                    dislikeCount = Dislike(1, postid);
+                    dislikeCount = Dislike(1,postid);
                     $(dislikebuttonstrJ).css("color", "red");
                 }
                 dislikes.innerHTML = dislikeCount;
                 this.classList.toggle("red");
             });
-            function Like(count, postid) {
+              function Like(count, postid) {
                 var post_url = "/Post/Like";
                 var datam = {
                     value: count,
-                    postidstr: postid
+                    postidstr:postid
                 };
                 var likes = 0;
                 $.ajax({
@@ -247,11 +241,11 @@
                 //event.preventDefault();
                 return likes;
             };
-            function Dislike(count, postid) {
+            function Dislike(count,postid) {
                 var post_url = "/Post/Dislike";
                 var datam = {
                     value: count,
-                    postidstr: postid
+                    postidstr:postid 
                 };
                 var dislikeCounttt = 0;
                 $.ajax({
@@ -272,5 +266,6 @@
             };
         });
     </script>
+
 </body>
 </html>
