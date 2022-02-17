@@ -69,11 +69,13 @@ namespace NSocial.Controllers
                     {
                         post.PostImagePath = path;
                         PostDAL.Methods.Edit(post);
-                        return Content(path);
+                        
+                        return RedirectToAction(actionName: "Index", controllerName: "Post");
                     }
                 }
             }
-            return RedirectToAction("Index");
+            
+            return RedirectToAction(actionName:"Index",controllerName:"Post");
         }
         public string PhotoUpload(int ID, HttpPostedFileBase postPhoto)
         {
