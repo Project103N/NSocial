@@ -16,7 +16,9 @@ namespace NSocial.Controllers
         {
             User activeUser = UserDAL.Methods.Find(SessionPersister.ID);
             ViewBag.activeUser = activeUser;
-            return View();
+
+            ICollection<Post> posts = PostDAL.Methods.List();
+            return View(posts);
         }
 
         public ActionResult About()
