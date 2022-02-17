@@ -25,7 +25,7 @@ namespace NSocial.DataAccess
         }
         public List<Post> List()
         {
-            string query = $"SELECT * FROM Post;";
+            string query = $"SELECT * FROM Post Order By [PostDate] Desc;";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             return GetPostList(cmd);
         }

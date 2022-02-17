@@ -1,8 +1,14 @@
 ﻿
 
 <script src="https://use.fontawesome.com/fe459689b4.js"></script>
-<a id="likes-@ViewBag.postid">@ViewBag.LikesCount</a>
-<button class="btn likebutton" id="btn-like-@ViewBag.postid" data-postid="@ViewBag.postid"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
-<a id="dislikes-@ViewBag.postid">@ViewBag.DislikesCount</a>
-<button class="btn dislikebutton" id="btn-dislike-@ViewBag.postid" data-postid="@ViewBag.postid"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
-
+<a href="javascript:void(0);"  class="btn btn-default stat-item">
+    <a id="likes-@ViewBag.postid">@ViewBag.LikesCount</a>
+    <button class="btn likebutton" id="btn-like-@ViewBag.postid" data-postid="@ViewBag.postid"><i class="fa fa-thumbs-up fa-lg" aria-hidden="true"></i></button>
+</a>
+<a href="javascript:void(0);"  class="btn btn-default stat-item">
+    <a id="dislikes-@ViewBag.postid">@ViewBag.DislikesCount</a>
+    <button class="btn dislikebutton" id="btn-dislike-@ViewBag.postid" data-postid="@ViewBag.postid"><i class="fa fa-thumbs-down fa-lg" aria-hidden="true"></i></button>
+</a>
+    <a href="javascript:void(0);" class="btn btn-default stat-item">
+        <i class="fa fa-share icon"></i>128
+    </a>
