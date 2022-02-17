@@ -1,12 +1,24 @@
-﻿<!DOCTYPE html>
+﻿@using NSocial.Security
+@using System
+@using NSocial.Models
+@using NSocial.DataAccess
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - ASP.NET Uygulamam</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{
+        bool isAuth = !string.IsNullOrEmpty(SessionPersister.Email);
+        User user = new User();
+        if (isAuth)
+        {
+            user = UserDAL.Methods.FindX(SessionPersister.Email);
+        }
+    }
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,7 +36,14 @@
                     <li>@Html.ActionLink("Giriş Sayfası", "Index", "Home")</li>
                     <li>@Html.ActionLink("Hakkında", "About", "Home")</li>
                     <li>@Html.ActionLink("Kişi", "Contact", "Home")</li>
+                    @if (isAuth)
+                    {
+                        @*<li><a class="btn btn-warning" href="/User/Details/@user.ID">@user.Email</a></li>*@
+                        @Html.ActionLink(@user.Email, "Details", "User", new { id=user.ID }, new { @class = "btn btn-warning" })
+                        <li>@Html.ActionLink("Logout", "Logout", "User", null, new { @class = "btn btn-danger" })</li>
+                    }
                 </ul>
+
             </div>
         </div>
     </div>

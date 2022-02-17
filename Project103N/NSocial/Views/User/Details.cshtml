@@ -1,0 +1,67 @@
+﻿@model NSocial.Models.User
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string profileImagePath = "/UploadedFiles/User/" + Model.ProfileImagePath;
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Profile Fotoğrafı
+        </dt>
+        <dd>
+                    <img src="@profileImagePath" style="width:100px;" />
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nickname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nickname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProfileImagePath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProfileImagePath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

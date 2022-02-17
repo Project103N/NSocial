@@ -1,0 +1,5 @@
+**.vs
+**.cache
+obj/Debug
+obj/
+Project103N/NSocial/Web.config
