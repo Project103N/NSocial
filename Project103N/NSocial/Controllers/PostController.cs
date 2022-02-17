@@ -160,5 +160,12 @@ namespace NSocial.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public int Like(string value,string postidstr)
+        {
+            var likeCount = PostDAL.Methods.AddLike(value, postidstr);
+            return likeCount;
+        }
+
     }
 }

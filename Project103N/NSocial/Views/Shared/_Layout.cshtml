@@ -160,7 +160,7 @@
 
                 if (dislikebutton.classList.contains('red')) {
                     dislikebutton.classList.remove('red');
-                    var dislikeCount = Dislike(-1);
+                    var dislikeCount = Dislike(-1,postid);
                     dislikes.innerHTML = dislikeCount;
                     var dislikebuttonstrJ = "#" + dislikebuttonstr;
                     $(dislikebuttonstrJ).css("color", "#AAA");
@@ -170,10 +170,10 @@
                 if (likebutton.classList.contains("green")) 
                 {
                     //likebutton.classList.remove('green');
-                    like = Like(-1); // like sayısı 1 eksilir.
+                    like = Like(-1,postid); // like sayısı 1 eksilir.
                     $(this).css("color", "#AAA");
                 }else{
-                    likeCount = Like(1);
+                    likeCount = Like(1,postid);
                     $(this).css("color", "green");
                 }
                 this.classList.toggle("green");
@@ -202,26 +202,27 @@
                 if (likebutton.classList.contains("green")) {
                     likebuttonstrJ = "#" + likebuttonstr;
                     likebutton.classList.remove("green");
-                    var likeCount = Like(-1);
+                    var likeCount = Like(-1,postid);
                     likes.innerHTML = String(likeCount);
                     $(likebuttonstrJ).css("color", "#AAA");
                 }
                 if (dislikebutton.classList.contains("red")) {
-                    dislikeCount = Dislike(-1);
+                    dislikeCount = Dislike(-1,postid);
                     $(this).css("color", "#AAA");
                 }
                 else {
                     var dislikebuttonstrJ = "#" + dislikebuttonstr;
-                    dislikeCount = Dislike(1);
+                    dislikeCount = Dislike(1,postid);
                     $(dislikebuttonstrJ).css("color", "red");
                 }
                 dislikes.innerHTML = dislikeCount;
                 this.classList.toggle("red");
             });
-            function Like(count) {
-                var post_url = "/Reaction/Like";
+              function Like(count, postid) {
+                var post_url = "/Post/Like";
                 var datam = {
-                    value: count
+                    value: count,
+                    postidstr:postid
                 };
                 var likes = 0;
                 $.ajax({
@@ -240,10 +241,11 @@
                 //event.preventDefault();
                 return likes;
             };
-            function Dislike(count) {
-                var post_url = "/Reaction/Dislike";
+            function Dislike(count,postid) {
+                var post_url = "/Post/Dislike";
                 var datam = {
-                    value: count
+                    value: count,
+                    postidstr:postid 
                 };
                 var dislikeCounttt = 0;
                 $.ajax({
