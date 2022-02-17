@@ -177,7 +177,9 @@ namespace NSocial.Controllers
         public ActionResult Accept(int id)
         {
             FollowDAL.Methods.FriendRequestAccepted(id);
-            return RedirectToAction("FriendList");
+            FollowDAL.Methods.AddFollowing(id);
+            FollowDAL.Methods.AddFollower(id);
+            return RedirectToAction( controllerName:"Home",actionName:"Index");
         }
 
         public ActionResult GetFollower()
@@ -191,8 +193,8 @@ namespace NSocial.Controllers
             try
             {
                 FollowDAL.Methods.FriendRequest(user.ID);
-               
-  
+
+
                 return RedirectToAction("Index");
             }
             catch
@@ -200,13 +202,13 @@ namespace NSocial.Controllers
                 return View();
             }
 
-            
+
         }
 
         public ActionResult FriendList()
         {
             List<User> NewUser = new List<User>();
-            List<User> List= FollowDAL.Methods.WaitingRequestsList();
+            List<User> List = FollowDAL.Methods.WaitingRequestsList();
             foreach (var item in List)
             {
                 NewUser.Add(FollowDAL.Methods.GetByID(item.ID));
@@ -214,13 +216,35 @@ namespace NSocial.Controllers
             return View(NewUser);
         }
 
-        public ActionResult FriendList2()
-        { 
-            //FollowDAL.Methods.FriendRequest(id);
-            int sayi1 = FollowDAL.Methods.GetFollowing(SessionPersister.ID);
-            int sayi2 = FollowDAL.Methods.GetFollower(SessionPersister.ID);
-            return View();
+        public ActionResult ToSeeFollowingList()
+        {
+            List<User> NewUser = new List<User>();
+            List<User> List = FollowDAL.Methods.ShowMyFollowings();
+            foreach (var item in List)
+            {
+                NewUser.Add(UserDAL.Methods.Find(item.ID));
+            }
+            return View(NewUser);
         }
+
+        public ActionResult ToSeeFollowerList()
+        {
+            List<User> NewUser = new List<User>();
+            List<User> List = FollowDAL.Methods.ShowMyFollower();
+            foreach (var item in List)
+            {
+                NewUser.Add(FollowDAL.Methods.GetByID(item.ID));
+            }
+            return View(NewUser);
+        }
+
+        public ActionResult UnFollow(int id)
+        {
+            FollowDAL.Methods.DeleteFromFollowTable(id);
+            return RedirectToAction(controllerName: "Home", actionName: "Index");
+        }
+
+
 
         public ActionResult Profile()
         {

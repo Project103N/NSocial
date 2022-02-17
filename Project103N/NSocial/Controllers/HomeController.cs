@@ -17,7 +17,19 @@ namespace NSocial.Controllers
             User activeUser = UserDAL.Methods.Find(SessionPersister.ID);
             ViewBag.activeUser = activeUser;
 
+            // TODO: Burası takip edilenlere göre düzenlenecek.
             ICollection<Post> posts = PostDAL.Methods.List();
+
+
+
+            List<User> followRequests = new List<User>();
+            List<User> IDList = FollowDAL.Methods.WaitingRequestsList();
+            foreach (var item in IDList)
+            {
+                followRequests.Add(UserDAL.Methods.Find(item.ID));
+            }
+            ViewBag.followRequests = followRequests;
+
             return View(posts);
         }
 

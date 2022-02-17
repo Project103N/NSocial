@@ -609,6 +609,28 @@
                 <div class="row">
                     <h5>Follow Requests</h5>
 
+                    <table class="table">
+                        <tr>
+                            <th>
+                                Follow Request
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                        </tr>
+                        @foreach (var item in ViewBag.followRequests)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Nickname
+                                </td>
+                                <td>
+                                    @Html.ActionLink(linkText:"Kabul et",actionName:"Accept",controllerName:"User", routeValues:new { id = item.ID },htmlAttributes:null) |
+                                    @Html.ActionLink(linkText:"Reddet", actionName: "Unfollow", controllerName: "User", routeValues: new { id = item.ID }, htmlAttributes: null)
+                                </td>
+                            </tr>
+                        }
+                    </table>
                 </div>
 
 
