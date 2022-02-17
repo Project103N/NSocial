@@ -25,7 +25,7 @@ namespace NSocial.Models
 			get
             {
 				if (_User == null)
-					_User = UserDAL.Methods.FindX(UserID);
+					_User = UserDAL.Methods.Find(UserID);
 				return _User;
             }
             set

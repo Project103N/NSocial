@@ -57,7 +57,7 @@
             @Html.DisplayFor(modelItem => item.CommentsCount)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UserID)
+            @Html.DisplayFor(modelItem => item.User.Nickname)
         </td>
         <td>
             @foreach (var comment in item.PostComments)
