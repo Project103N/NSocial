@@ -32,15 +32,13 @@ namespace NSocial.Controllers
             Comments newComments = new Comments();
             newComments.PostID = id;
             return View(newComments);
-            
-            
         }
         [HttpPost]
-        public ActionResult Add(Comments comments)
+        public int Add(Comments comments)
         {
             TempData["insertedID"] = CommentsDAL.Methods.Add(comments);
             ViewBag.comment = comments.Text;
-            return RedirectToAction("Index");
+            return 1;
         }
         
     }

@@ -68,7 +68,7 @@ namespace NSocial.DataAccess
         }
         public List<Comments> GetByPostID(int id)
         {
-            string query = $"SELECT * FROM Comments WHERE PostID=@postId;";
+            string query = $"SELECT * FROM Comments WHERE PostID=@postId ORDER BY ID DESC;";
             SqlCommand cmd = new SqlCommand(query, DbTools.Connection.con);
             cmd.Parameters.AddWithValue("@postId", id);
             try

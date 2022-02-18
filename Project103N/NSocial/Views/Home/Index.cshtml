@@ -571,6 +571,32 @@
     </style>
 }
 
+<script>
+
+    function addcomment(postid) {
+        //alert(postid);
+        var commentinputid = "#comment-" + String(postid);
+        var Text = $(commentinputid).val(); // Formdan veri alırken.
+        //alert(Text);
+        var post_url = "/Comments/Add";
+        var datam = {
+            postID: postid,
+            Text: Text
+        };
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: post_url,
+            data: datam,
+            dataType: "json",
+            encode: true,
+            success: function (status) {
+                location.reload();
+            }
+        });
+    }
+</script>
+
 <div class="row">
     <div class="col-md-4 mb30">
         <div class="card">
@@ -689,18 +715,24 @@
                             </div>
                         </div>
                         <div class="post-footer">
+                            @using(Html.BeginForm(method: FormMethod.Post, actionName: "Add", controllerName: "Comments"))
+                            {
                             <div class="input-group">
-                                <input class="form-control" placeholder="Add a comment" type="text">
+
+                                <input id="comment-@post.ID" class="form-control" placeholder="Add a comment" type="text" name="Text">
+                                <input type="hidden" name="PostID" value="@post.ID">
                                 <span class="input-group-addon">
-                                    <a href="javascript:void(0);"><i class="fa fa-edit"></i></a>
+                                    <i class="fa fa-edit" onclick="addcomment(postid=@post.ID)"></i>
                                 </span>
+
                             </div>
+                            }
                             <ul class="comments-list">
                                 @foreach (Comments comment in post.PostComments)
                                 {
                                     <li class="comment">
                                         <a class="pull-left" href="javascript:void(0);">
-                                            @{ string commenterpic = postsenderImageBase + comment.User.ProfileImagePath;  }
+                                            @{ string commenterpic = postsenderImageBase + comment.User.ProfileImagePath; }
                                             <img class="avatar" src="@commenterpic" alt="avatar">
                                         </a>
                                         <div class="comment-body">
@@ -711,32 +743,32 @@
                                             <p>@comment.Text</p>
                                         </div>
                                     </li>
-                                    }
-                                    @*<li class="comment">
-                                        <a class="pull-left" href="javascript:void(0);">
-                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                                        </a>
-                                        <div class="comment-body">
-                                            <div class="comment-heading">
-                                                <h4 class="user">John Doe</h4>
-                                                <h5 class="time">3 minutes ago</h5>
-                                            </div>
-                                            <p>I think I might you this for one of my projects.</p>
-                                        </div>
-                                    </li>
-                                    <li class="comment">
-                                        <a class="pull-left" href="javascript:void(0);">
-                                            <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="avatar">
-                                        </a>
-                                        <div class="comment-body">
-                                            <div class="comment-heading">
-                                                <h4 class="user">John Doe</h4>
-                                                <h5 class="time">10 seconds ago</h5>
-                                            </div>
-                                            <p>Wow! This is gorgeous.</p>
-                                        </div>
-                                    </li>*@
-                                </ul>
+                                }
+                                @*<li class="comment">
+                <a class="pull-left" href="javascript:void(0);">
+                    <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                </a>
+                <div class="comment-body">
+                    <div class="comment-heading">
+                        <h4 class="user">John Doe</h4>
+                        <h5 class="time">3 minutes ago</h5>
+                    </div>
+                    <p>I think I might you this for one of my projects.</p>
+                </div>
+            </li>
+            <li class="comment">
+                <a class="pull-left" href="javascript:void(0);">
+                    <img class="avatar" src="https://bootdey.com/img/Content/avatar/avatar4.png" alt="avatar">
+                </a>
+                <div class="comment-body">
+                    <div class="comment-heading">
+                        <h4 class="user">John Doe</h4>
+                        <h5 class="time">10 seconds ago</h5>
+                    </div>
+                    <p>Wow! This is gorgeous.</p>
+                </div>
+            </li>*@
+                            </ul>
                         </div>
                     </div>
                 </div>
