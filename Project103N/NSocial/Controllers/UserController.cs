@@ -177,8 +177,15 @@ namespace NSocial.Controllers
         public ActionResult Accept(int id)
         {
             FollowDAL.Methods.FriendRequestAccepted(id);
-            FollowDAL.Methods.AddFollowing(id);
-            FollowDAL.Methods.AddFollower(id);
+
+            User currentUser = UserDAL.Methods.Find(SessionPersister.ID);
+            currentUser.FollowersCount += 1;
+            UserDAL.Methods.SaveChanges(currentUser);
+
+            User followerUser = UserDAL.Methods.Find(id);
+            followerUser.FollowingsCount += 1;
+            UserDAL.Methods.SaveChanges(followerUser);
+
             return RedirectToAction( controllerName:"Home",actionName:"Index");
         }
 
@@ -218,13 +225,13 @@ namespace NSocial.Controllers
 
         public ActionResult ToSeeFollowingList()
         {
-            List<User> NewUser = new List<User>();
+            List<User> takipEttiklerim = new List<User>();
             List<User> List = FollowDAL.Methods.ShowMyFollowings();
             foreach (var item in List)
             {
-                NewUser.Add(UserDAL.Methods.Find(item.ID));
+                takipEttiklerim.Add(UserDAL.Methods.Find(item.ID));
             }
-            return View(NewUser);
+            return View(takipEttiklerim);
         }
 
         public ActionResult ToSeeFollowerList()

@@ -621,11 +621,11 @@
                 <div class="row">
                     <div class="col-md-4 mb20">
                         <h5>@ViewBag.activeUser.FollowersCount</h5>
-                        <h6 class="text-small text-muted">Followers</h6>
+                        <h6 class="text-small text-muted"><a href="/User/ToSeeFollowerList/">Followers</a></h6>
                     </div>
                     <div class="col-md-4 mb20">
                         <h5>@ViewBag.activeUser.FollowingsCount</h5>
-                        <h6 class="text-small text-muted">Followings</h6>
+                        <h6 class="text-small text-muted"><a href="/User/ToSeeFollowingList/"> Followings </a></h6>
                     </div>
                     <div class="col-md-4 mb20">
                         <h5>48</h5>
@@ -638,7 +638,7 @@
                     <table class="table">
                         <tr>
                             <th>
-                                Follow Request
+                                Follow Requests
                             </th>
                             <th>
                                 Action
@@ -651,8 +651,8 @@
                                     @item.Nickname
                                 </td>
                                 <td>
-                                    @Html.ActionLink(linkText:"Kabul et",actionName:"Accept",controllerName:"User", routeValues:new { id = item.ID },htmlAttributes:null) |
-                                    @Html.ActionLink(linkText:"Reddet", actionName: "Unfollow", controllerName: "User", routeValues: new { id = item.ID }, htmlAttributes: null)
+                                    @Html.ActionLink(linkText:"Kabul et",actionName:"Accept",controllerName:"User", routeValues:new { id = item.ID },htmlAttributes:new {@class="btn btn-success" }) |
+                                    @Html.ActionLink(linkText:"Reddet", actionName: "Unfollow", controllerName: "User", routeValues: new { id = item.ID }, htmlAttributes: new { @class = "btn btn-danger" })
                                 </td>
                             </tr>
                         }
